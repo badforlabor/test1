@@ -1,7 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.u2d_tutorial.CSharp", "UnityVS.u2d_tutorial.CSharp.csproj", "{04458DAC-6974-93E4-03A4-9FCDD952DE22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "Source\GameFramework\GameFramework.csproj", "{4FAE4FDF-5C05-41C0-9919-3D2AE2A9A239}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Source\Editor\Editor.csproj", "{0363DFC3-8BCD-4EC4-8907-6BA9FF5EB7C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +19,14 @@ Global
 		{04458DAC-6974-93E4-03A4-9FCDD952DE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04458DAC-6974-93E4-03A4-9FCDD952DE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04458DAC-6974-93E4-03A4-9FCDD952DE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FAE4FDF-5C05-41C0-9919-3D2AE2A9A239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FAE4FDF-5C05-41C0-9919-3D2AE2A9A239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FAE4FDF-5C05-41C0-9919-3D2AE2A9A239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FAE4FDF-5C05-41C0-9919-3D2AE2A9A239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0363DFC3-8BCD-4EC4-8907-6BA9FF5EB7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0363DFC3-8BCD-4EC4-8907-6BA9FF5EB7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0363DFC3-8BCD-4EC4-8907-6BA9FF5EB7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0363DFC3-8BCD-4EC4-8907-6BA9FF5EB7C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
