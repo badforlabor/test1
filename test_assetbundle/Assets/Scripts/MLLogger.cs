@@ -23,7 +23,7 @@ namespace MLGame
         private static bool initialized = false;
         private static StreamWriter stream;
 
-        public static bool LogToFile = false;
+        public static bool LogToFile = true;
 
         private static void _Initialized()
         {

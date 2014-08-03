@@ -12,7 +12,7 @@ using MLGame;
 public class DownloadManager : MonoBehaviour 
 {
     // 不同的文件加载方式
-    static string LOADFOLDER = "iLingYou-g/";
+    static string LOADFOLDER = "iLingYou-huianchengzhen01/";
 
 
 
@@ -49,7 +49,7 @@ public class DownloadManager : MonoBehaviour
 		}
 	}
 
-    static string ReplaceSlashWithBlackspace(string abc)
+    public static string ReplaceSlashWithBlackspace(string abc)
     {
         if(string.IsNullOrEmpty(abc))
         {
@@ -170,6 +170,15 @@ public class DownloadManager : MonoBehaviour
         return www;
     }
 
+    Dictionary<string, AssetBundle> DownloadedABs = new Dictionary<string, AssetBundle>();
+
+    public void FreeAllCreates(bool force = false)
+    {
+        foreach (var ab in DownloadedABs)
+        {
+            ab.Value.Unload(force);
+        }
+    }
     // 从磁盘加载
     public AssetBundle CreateFromFile(string url)
     {
@@ -201,7 +210,8 @@ public class DownloadManager : MonoBehaviour
                 {
                     foreach (var dep in bundle.dependAssets)
                     {
-                        System.Diagnostics.Debug.Assert( CreateFromFile2(dep) != null );
+                        CreateFromFile2(dep);
+                        //System.Diagnostics.Debug.Assert( CreateFromFile2(dep) != null );
                     }
                     break;
                 }
@@ -265,6 +275,11 @@ public class DownloadManager : MonoBehaviour
             return bmConfiger;
         }
     }
+
+    public bool IsDownloading()
+    {
+        return requestedBeforeInit.Count > 0 || waitingRequests.Count > 0 || processingRequest.Count > 0 || succeedRequest.Count == 0;
+    }
 	
 	public IEnumerator WaitDownload(string url)
 	{
@@ -302,18 +317,18 @@ public class DownloadManager : MonoBehaviour
             return;
         }
 
-        if (!url.ToLower().Contains("resources-"))
+        if (false && !url.ToLower().Contains("resources-"))
         {
             return;
         }
 
-        if (PendingUrls.Contains(url))
-        {
-            return;
-        }
-        PendingUrls.Add(url);
+        //if (PendingUrls.Contains(url))
+        //{
+        //    return;
+        //}
+        //PendingUrls.Add(url);
 
-        return;
+        //return;
 
         if (!bundleDict.ContainsKey(url) )
         {
@@ -324,7 +339,7 @@ public class DownloadManager : MonoBehaviour
             return;
         }
 
-        if (false)
+        if (true)
         {
             // 依次下载url的依赖
             List<string> urls = new List<string>();
@@ -338,6 +353,37 @@ public class DownloadManager : MonoBehaviour
         }
 
     }
+
+    Dictionary<string, AssetBundle> ABs = new Dictionary<string,AssetBundle>();
+    public AssetBundle GetAB(string url)
+    {
+        return ABs[url];
+    }
+    public void DoDownload2()
+    {
+        foreach (var url in PendingUrls)
+        {
+            string url1 = formatUrl(url + ".assetbundle");
+            ABs.Add(url, AssetBundle.CreateFromFile(url1));
+        }
+    }
+
+    public IEnumerator DoCoDownload()
+    {
+        foreach (var url in PendingUrls)
+        {
+            string url2 = formatUrl(url + ".assetbundle");
+            WWW www = WWW.LoadFromCacheOrDownload(url2, -1);
+            yield return www;
+            WWWRequest abc = new WWWRequest();
+            abc.url = url2;
+            abc.www = www;
+            succeedRequest.Add(url2, abc);
+            MLLogger.LogDebug("[22222222] www, url=" + url2);
+        }
+        yield return null;
+    }
+
     public void DoDownload()
     {
         foreach (var url in PendingUrls)
@@ -345,8 +391,9 @@ public class DownloadManager : MonoBehaviour
             // 开始真正的下载：
             WWWRequest request = new WWWRequest();
             request.url = formatUrl(url + ".assetbundle");
-            request.priority = 0;
-            addRequestToWaitingList(request);
+            request.priority = -1;
+            waitingRequests.Add(request);
+            //addRequestToWaitingList(request);
         }
     }
     public void RecursiveDownload2(ref List<string> urls, string url)
@@ -710,7 +757,8 @@ public class DownloadManager : MonoBehaviour
 		{
 			if(request.www.error != null)
 			{
-				if(request.triedTimes - 1 < bmConfiger.downloadRetryTime)
+                Debug.LogError("******************* Download " + request.url + " failed for " + request.triedTimes + " times.\nError: " + request.www.error);
+                if (request.triedTimes - 1 < bmConfiger.downloadRetryTime)
 				{
 					// Retry download
 					request.CreatWWW();
@@ -762,7 +810,7 @@ public class DownloadManager : MonoBehaviour
 		
 		// Start download new bundles
 		int waitingIndex = 0;
-		while( processingRequest.Count < bmConfiger.downloadThreadsCount && 
+		while( processingRequest.Count < 1 && //bmConfiger.downloadThreadsCount && 
 			   waitingIndex < waitingRequests.Count)
 		{
 			WWWRequest curRequest = waitingRequests[waitingIndex++];
@@ -1025,7 +1073,6 @@ public class DownloadManager : MonoBehaviour
 
     HashSet<string> processed = new HashSet<string>();
     Dictionary<string, WWW> DownloadedURLs = new Dictionary<string, WWW>();
-    Dictionary<string, AssetBundle> DownloadedABs = new Dictionary<string, AssetBundle>();
 	
 	string downloadRootUrl = null;
 	WWW curConfigWWW = null;
@@ -1087,16 +1134,23 @@ public class DownloadManager : MonoBehaviour
 
         public void NotifyDone()
         {
-            Debug.Log("[pak-bundle] www request is done.bundle=" + ((www == null || www.assetBundle == null) ? "none" : www.assetBundle.mainAsset.name) 
+            Debug.Log("[pak-bundle] www request is done.bundle=" + ((www == null || www.assetBundle == null) ? "none" : "123") 
                     +  " begin=" + BeginTime + ",end=" + Time.time + ", cost-time=" + (Time.time - BeginTime));
         }
 
 		public void CreatWWW()
 		{	
 			triedTimes++;
-			
+
+            MLLogger.LogDebug("[22222222] www, url=" + url);
+
+            if (url.Contains("TexturesUnified.shader"))
+            {
+                Debug.LogError("**************** TexturesUnified.shader url=" + url);
+            }
+
 			if(true || DownloadManager.instance.bmConfiger.useCache && bundleBuildState != null)
-				www = WWW.LoadFromCacheOrDownload(url, 0);//bundleBuildState.version);
+				www = WWW.LoadFromCacheOrDownload(url, -1);//bundleBuildState.version);
 			else
 				www = new WWW(url);
 
