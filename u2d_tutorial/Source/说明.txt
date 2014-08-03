@@ -1,0 +1,10 @@
+Source			代码目录
+	GameFramework	游戏相关代码
+	Editor		工具代码
+	ThirdParty	第三方代码相关的，既包括用于GameFramework的，也包括用于Editor的
+	Build		工程vcproj，vcsproj存放的位置
+	Binaries	工程输出目录
+		
+依赖关系是Editor依赖于GameFramework文件夹
+
+不过，由于Unity的一些特殊性，可能最终输出的目录是Asset/DLL
