@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Reflection;
 using System.IO;
+using System.Collections.Generic;
 
 public class GameInfo : MonoBehaviour {
 
     string Result = "";
+    int addedResult = 0;
 	// Use this for initialization
 	void Start () {
 //#if UNITY_ANDROID
@@ -14,6 +16,7 @@ public class GameInfo : MonoBehaviour {
         {
             Result = di.FullName;
         }
+        addedResult = MLGame.Utils.Add(1, 2);
 //#else
 //        System.IO.Directory.CreateDirectory(Application.dataPath + "/../labor/");
 //#endif
@@ -31,7 +34,7 @@ public class GameInfo : MonoBehaviour {
 
         area.yMin += 20;
         area.yMax += 20;
-        GUI.Label(area, "1+2=" + (MLGame.Utils.Add(1,2)));
+        GUI.Label(area, "1+2=" + (addedResult));
 
         area.yMin += 20;
         area.yMax += 20;
@@ -57,5 +60,51 @@ public class GameInfo : MonoBehaviour {
         area.yMax += 20;
         GUI.Label(area, "Util.result=" + MLGame.Utils.Result);
 
+
+#if false
+        List<string> files = new List<string>();
+        GetAllFiles(Application.dataPath, ref files, false);
+        if (files.Count == 0)
+        {
+            GetAllFiles(Application.dataPath + "!", ref files, false);
+        }
+        GUI.Label(area, "files=" + files.Count);
+        foreach (var file in files)
+        {
+            area.yMin += 20;
+            area.yMax += 20;
+            GUI.Label(area, "file=" + file);
+        }
+#endif
+
     }
+
+    static void GetAllFiles(string dir, ref List<string> files, bool meta)
+    {
+        if (!Directory.Exists(dir))
+        {
+            return;
+        }
+        string[] curfiles = Directory.GetFiles(dir);
+        foreach (var file in curfiles)
+        {
+            if (!meta && file.EndsWith(".meta"))
+            {
+
+            }
+            else
+            {
+                files.Add(file.Replace('\\', '/'));
+            }
+        }
+        curfiles = Directory.GetDirectories(dir);
+        foreach (var file in curfiles)
+        {
+            if (Directory.Exists(file))
+            {
+                GetAllFiles(file, ref files, meta);
+            }
+        }
+    }
+
 }

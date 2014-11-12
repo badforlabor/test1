@@ -2,7 +2,7 @@
 Copyright (c) 2013-2014,Dalian-LingYOU tech.
  This is not a free-ware .DO NOT use it without any authorization.
  * 
- * date : 11/11/2014 5:54:05 PM
+ * date : 11/12/2014 11:46:13 AM
  * author : Administrator
  * purpose : 
 ****************************************************************************/
@@ -13,15 +13,17 @@ using System.Collections.Generic;
 
 namespace MLGame
 {
-    class Utils_Script
+    public class mono1 : MonoBehaviour
     {
-        public static int Add(int a, int b)
-        {
-            //GameObject go = Resources.Load<GameObject>("mono1");
-            //GameObject.Instantiate(go);
+        public int a = 0;
 
-            //return a + 1 + b * 2;
-            return MLGame.Utils.Add3(a, b);
+        void OnGUI()
+        {
+            Color old = GUI.color;
+            GUI.color = Color.red;
+            Rect area = new Rect(10, 100, Screen.width, 20);
+            GUI.Label(area, "mono1");
+            GUI.color = old;
         }
     }
 }

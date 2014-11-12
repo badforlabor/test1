@@ -23,17 +23,51 @@ namespace MLGame
             return Add2();
             //return a + b* 2;
         }
+        static void GetAllFiles(string dir, ref List<string> files, bool meta)
+        {
+            if (!Directory.Exists(dir))
+            {
+                return;
+            }
+            string[] curfiles = Directory.GetFiles(dir);
+            foreach (var file in curfiles)
+            {
+                if (!meta && file.EndsWith(".meta"))
+                {
+
+                }
+                else
+                {
+                    files.Add(file.Replace('\\', '/'));
+                }
+            }
+            curfiles = Directory.GetDirectories(dir);
+            foreach (var file in curfiles)
+            {
+                if (Directory.Exists(file))
+                {
+                    GetAllFiles(file, ref files, meta);
+                }
+            }
+        }
+
         public static int Add2()
         {
             try
             {
                 // 加载外部dll！
-#if true
+#if false
                 // window下
                 string dllDir = Application.dataPath + "/DLL/";
 #else
                 // android下
                 string dllDir = Application.persistentDataPath + "/labor/";
+
+                
+                //List<string> files = new List<string>();
+                //GetAllFiles(Application.dataPath, ref files, false);
+                
+                //File.Copy(dllDir + "GameCore_Script.dll", Application.dataPath + "/Managed/GameCore_Script.dll");
 #endif
                 FileStream fs = new System.IO.FileStream(dllDir + "GameCore_Script", FileMode.Open, FileAccess.Read);
                 long length = fs.Length;
@@ -51,6 +85,11 @@ namespace MLGame
                 Debug.LogError(e.Message);
             }
             return 0;
+        }
+
+        public static int Add3(int a, int b)
+        {
+            return a + b * 2;
         }
     }
 }
