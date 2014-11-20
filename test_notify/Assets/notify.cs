@@ -22,6 +22,7 @@ public class notify : MonoBehaviour {
 
     void MakeNotify(string title, int hour, int min = 0)
     {
+#if UNITY_IPHONE
         DateTime time = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, min, 0);
         // 时间如果不对，会失败
         if (time > DateTime.Now)
@@ -49,6 +50,13 @@ public class notify : MonoBehaviour {
 
         // 测试
         //NotificationServices.PresentLocalNotificationNow(noti);
+#endif
+    }
+    void ClearSchedule()
+    {
+#if UNITY_IPHONE
+        NotificationServices.CancelAllLocalNotifications();
+#endif
     }
     void SetSchedule()
     {
@@ -56,10 +64,6 @@ public class notify : MonoBehaviour {
         MakeNotify("17点有活动哦", 17);
         MakeNotify("17:10点有活动哦", 17, 10);
         MakeNotify("17:20点有活动哦", 17, 20);
-    }
-    void ClearSchedule()
-    {
-        NotificationServices.CancelAllLocalNotifications();
     }
 
     void OnApplicationPause(bool pause)
@@ -80,7 +84,9 @@ public class notify : MonoBehaviour {
 	}
     void OnGUI()
     {
+#if UNITY_IPHONE
         Rect area = new Rect(10, 10, Screen.width, 20);
         GUI.Label(area, "remote=" + NotificationServices.remoteNotificationCount);
+#endif
     }
 }
