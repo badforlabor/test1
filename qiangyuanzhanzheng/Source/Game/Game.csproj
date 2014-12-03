@@ -40,7 +40,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\SHGameManager.cs" />
+    <Compile Include="Game\SHBattleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\SHLoginBehaviour.cs" />
+    <Compile Include="UI\SHQuitBattleBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Extension\Extension.csproj">
@@ -51,6 +55,9 @@
       <Project>{10eae852-a3c9-4152-9962-f9868c56f86a}</Project>
       <Name>GamePrefab</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

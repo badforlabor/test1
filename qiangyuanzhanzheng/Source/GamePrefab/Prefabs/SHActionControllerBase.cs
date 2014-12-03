@@ -21,10 +21,10 @@ namespace SHGame
         // Use this for initialization
         void Start()
         {
-            SHLogger.LogDebug("cc=" + cc.GetFullName());
+            SHLogger.Debug("cc=" + cc.GetFullName());
             cc = gameObject.GetComponent<CharacterController>();
-            //SHLogger.LogDebug("cc=" + (cc == null ? "none" : cc.name));
-            SHLogger.LogDebug("cc=" + cc.GetFullName());
+            //SHLogger.Debug("cc=" + (cc == null ? "none" : cc.name));
+            SHLogger.Debug("cc=" + cc.GetFullName());
         }
 
         public float RunSpeed = 7.0f;    // 7m/s

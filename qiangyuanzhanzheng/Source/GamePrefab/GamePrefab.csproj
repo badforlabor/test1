@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\SHGameManagerBase.cs" />
-    <Compile Include="Core\SHStats.cs" />
+    <Compile Include="Core\SHNames.cs" />
+    <Compile Include="Core\SHSceneManager.cs" />
     <Compile Include="Prefabs\SHActionControllerBase.cs" />
     <Compile Include="Prefabs\SHFPS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

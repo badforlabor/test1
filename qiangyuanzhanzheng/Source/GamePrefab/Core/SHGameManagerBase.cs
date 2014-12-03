@@ -22,6 +22,19 @@ namespace SHGame
         {
             return (!Application.isEditor && (Platform == RuntimePlatform.Android || Platform == RuntimePlatform.IPhonePlayer));
         }
+        
+        // 把逻辑代码转到Game工程中。
+        void ReInit()
+        {
+            SHLogger.Debug("[game-manager] before reinit, inst=" + SHGameManagerBase.Singleton.GetFullName()
+                    + ", showme=" + SHGameManagerBase.Singleton.ShowMe());
+            
+            System.Activator.CreateInstance("Game", "SHGame.SHGameManager");
+            SHGameManagerBase.Singleton.Init();
+
+            SHLogger.Debug("[game-manager] after reinit, inst=" + SHGameManagerBase.Singleton.GetFullName()
+                    + ", showme=" + SHGameManagerBase.Singleton.ShowMe());
+        }
 
         public void Awake()
         {
@@ -31,28 +44,44 @@ namespace SHGame
         // Use this for initialization
         public void Start()
         {
+            SHLogger.Info("[virgin] game manager start.");
+
+            SHLogger.Info("[virgin] begin init.");
+
+            SHLogger.Info("[virgin] end init.");
+
+            ReInit();
+
+        }
+        virtual protected void Init()
+        {
 
         }
 
         // Update is called once per frame
-        public void Update(float delta)
+        virtual public void Update(float delta)
         {
-            SHStats.Singleton.Tick(delta);
+            SHStats.Singleton.Update(delta);
+            SHSceneManager.Singleton.Update(delta);
         }
 
-        public void FixedUpdate(float delta)
+        virtual public void FixedUpdate(float delta)
         {
 
         }
 
-        public void OnGUI()
+        virtual public void OnGUI()
         {
             SHStats.Singleton.OnGUI();
         }
 
-        public void OnDestroy()
+        virtual public void OnDestroy()
         {
 
+        }
+        string ShowMe()
+        {
+            return ("my name is 'base'");
         }
     }
 }

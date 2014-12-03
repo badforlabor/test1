@@ -3,24 +3,32 @@ Copyright (c) 2013-2025,大连-游你酷伴.
  This is not a free-ware .DO NOT use it without any authorization.
  * 坚持做有意思的游戏
  * 
- * date : 11/22/2014 11:57:35 AM
+ * date : 11/26/2014 10:19:08 PM
  * author : Labor
- * purpose : 
+ * purpose : 定义代理类型，让其通用
 ****************************************************************************/
 using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace SHGame
 {
-    public class TestMenu
+    // 没有参数
+    public delegate void CallBackVoid();
+
+    // 一个参数
+    public delegate void CallBackInt(int a);
+    public delegate void CallBackFloat(float b);
+
+    public class SHDelegate
     {
-        [MenuItem("ShGame/test1")]
-        public static void ProcMenu()
+        public static void Exec(CallBackVoid cb)
         {
-            SHLogger.Debug("XXXXXXXXXXXXXXXXXXXXX");
+            if (cb != null)
+            {
+                cb();
+            }
         }
     }
 }

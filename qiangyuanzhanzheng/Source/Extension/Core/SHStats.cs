@@ -5,7 +5,7 @@ Copyright (c) 2013-2025,大连-游你酷伴.
  * 
  * date : 11/23/2014 12:02:45 AM
  * author : Labor
- * purpose : 
+ * purpose : 方便调试。
 ****************************************************************************/
 using UnityEngine;
 using System;
@@ -65,7 +65,7 @@ namespace SHGame
         {
             AddMsg("" + UNIQUE_ID, content, color, lifetime);
         }
-        public void Tick(float deltaTime)
+        public void Update(float deltaTime)
         {
             if (IsReleaseVersion())
             {

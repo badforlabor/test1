@@ -20,5 +20,9 @@ namespace SHGame
         {
             return (obj == null ? "none" : obj.ToString());
         }
+        public static string GetFullName(this System.Object obj)
+        {
+            return (obj == null ? "none" : obj.ToString());
+        }
     }
 }

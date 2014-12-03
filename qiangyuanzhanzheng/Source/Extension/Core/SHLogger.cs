@@ -16,21 +16,21 @@ namespace SHGame
 {
     public class SHLogger
     {
-        public static void LogDebug(string content)
+        public static void Debug(string content)
         {
-            Debug.Log("[debug]" + content);
+            UnityEngine.Debug.Log("[debug]" + content);
         }
-        public static void LogInfo(string content)
+        public static void Info(string content)
         {
-            Debug.Log("[info]" + content);
+            UnityEngine.Debug.Log("[info]" + content);
         }
-        public static void LogWarning(string content)
+        public static void Warning(string content)
         {
-            Debug.LogWarning("[warning]" + content);
+            UnityEngine.Debug.LogWarning("[warning]" + content);
         }
-        public static void LogError(string content)
+        public static void Error(string content)
         {
-            Debug.LogError("[error]" + content);
+            UnityEngine.Debug.LogError("[error]" + content);
         }
     }
 }

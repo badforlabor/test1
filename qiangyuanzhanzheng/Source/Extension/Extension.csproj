@@ -43,9 +43,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\SHDelegate.cs" />
+    <Compile Include="Core\SHEvents.cs" />
+    <Compile Include="Core\SHDispatcher.cs" />
     <Compile Include="Core\SHExtensionMethod.cs" />
     <Compile Include="Core\SHLogger.cs" />
+    <Compile Include="Core\SHResourceManager.cs" />
     <Compile Include="Core\SHSingleton.cs" />
+    <Compile Include="Core\SHStats.cs" />
     <Compile Include="Core\SHUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
