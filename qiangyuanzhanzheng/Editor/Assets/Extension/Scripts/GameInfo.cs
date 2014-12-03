@@ -6,6 +6,7 @@ public class GameInfo : MonoBehaviour
 {
     void Awake()
     {
+        SHLogger.Debug("[virgin] gameinfo awake.");
 #if UNITY_IPHONE
         SHGameManagerBase.Singleton.Platform = RuntimePlatform.IPhonePlayer;
 #elif UNITY_ANDROID
@@ -21,6 +22,7 @@ public class GameInfo : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SHLogger.Debug("[virgin] gameinfo start.");
         SHGameManagerBase.Singleton.Start();
     }
 
