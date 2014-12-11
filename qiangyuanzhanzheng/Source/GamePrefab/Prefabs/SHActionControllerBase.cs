@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace SHGame
 {
-    class SHActionControllerBase : MonoBehaviour
+    public class SHActionControllerBase : MonoBehaviour
     {
         CharacterController cc = null;
 

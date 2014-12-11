@@ -40,8 +40,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle\SHMoveAgent.cs" />
     <Compile Include="Core\SHGameManager.cs" />
-    <Compile Include="Game\SHBattleManager.cs" />
+    <Compile Include="Battle\SHBattleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\SHLoginBehaviour.cs" />
     <Compile Include="UI\SHQuitBattleBehaviour.cs" />
