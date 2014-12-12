@@ -344,7 +344,7 @@ public class AIPath : MonoBehaviour {
 			navController.SimpleMove (GetFeetPosition(),dir);
 #endif
 		} else if (controller != null) {
-			controller.SimpleMove (dir);
+            controller.SimpleMove(dir);
 		} else if (rigid != null) {
 			rigid.AddForce (dir);
 		} else {

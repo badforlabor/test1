@@ -11,6 +11,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 
 namespace SHGame
 {
@@ -30,6 +31,8 @@ namespace SHGame
             SHResources.Singleton.Instance<UnityEngine.Object>("Rooms/huianchengzhen02");
 
             // 加载寻路网格
+            // 用了第三方库，提供的接口很简单：
+            //      用RecastNavMesh生成一个obj文件，然后运行时加载mesh，并将其赋值给NavMeshGraph，然后执行一下Scan即可。
             Mesh mesh = SHResources.Singleton.Load<Mesh>("Rooms/NavMesh/huianchengzhen02");
             if (mesh == null)
             {
@@ -40,11 +43,15 @@ namespace SHGame
                 // AstarPath 被放在battle场景的对象A*中
                 SHLogger.Error("[Battle] can't find astar!");
             }
+            // 运行时，只允许有一个，且其为NavMeshGraph
             if (AstarPath.active.graphs.Length != 0)
             {
                 SHLogger.Error("[Battle] astar is invalid!");
             }
-            AstarPath.active.astarData.AddGraph(new Pathfinding.RecastGraph());
+            AstarPath.active.astarData.AddGraph(typeof(NavMeshGraph));
+            NavMeshGraph navGraph = AstarPath.active.astarData.graphs[0] as NavMeshGraph;
+            navGraph.sourceMesh = mesh;
+            AstarPath.active.Scan();
 
             // 加载触发器
 
@@ -65,13 +72,17 @@ namespace SHGame
         {
             GameObject hero = SHResources.Singleton.Instance<GameObject>("Characters/hero_no1");
             hero.AddComponent<SHActionControllerBase>();
+            hero.name = "HERO";
         }
 
         // 怪
         void AssembleMonsters()
         {
+            GameObject go = new GameObject("MONSTERS");
+
             GameObject monster = SHResources.Singleton.Instance<GameObject>("Characters/hero_no1");
             monster.AddComponent<SHMoveAgent>();
+            monster.transform.parent = go.transform;
         }
     }
 }
