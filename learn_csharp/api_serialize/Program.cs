@@ -99,6 +99,7 @@ namespace api_serialize
             FieldInfo[] fields = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             foreach (var field in fields)
             {
+                // Attribute.GetCustomAttribute
                 if (field.FieldType.IsArray)
                 {
                     // 写入：数组长度（如果是null，那么写-1）
