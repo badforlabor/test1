@@ -10,7 +10,7 @@ namespace keyword_delegate
     {
         // 相当于c++中的 typedef int (*Func)(int a, int b);
         // 现在Func相当于一个类（跟class A本质上是相同的），只不过他是一个函数指针
-        delegate int Func(int a, int b);
+        public delegate int Func(int a, int b);
         void ShowResult(int a, int b, Func func)
         {
             Console.WriteLine("show result:" + func(a, b));
@@ -35,11 +35,18 @@ namespace keyword_delegate
             Console.WriteLine("show float result:" + a);
         }
 
+        public Func notifyer;
+
         static void Main(string[] args)
         {
             Program p = new Program();
             p.ShowResult(1, 2, p.Add);
             p.ShowResult(1, 2, Multiply);
+
+            //p.notifyer += p.Add;
+            //p.notifyer += Multiply;
+            p.notifyer(1, 2);
+
 
             // 匿名的delegate函数
             p.ShowResult(1, 2, 
