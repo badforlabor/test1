@@ -181,7 +181,21 @@ namespace api_serialize
             }
             else if (type == typeof(char))
             { 
-            
+            }
+            else if (type == typeof(decimal))
+            { 
+            }
+            else if (type == typeof(sbyte))
+            { 
+            }
+            else if (type == typeof(ushort))
+            { 
+            }
+            else if (type == typeof(uint))
+            { 
+            }
+            else if (type == typeof(ulong))
+            { 
             }
             else if (type == typeof(byte))
             {
