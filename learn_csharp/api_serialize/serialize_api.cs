@@ -17,6 +17,9 @@ namespace api_serialize
         void Serialize(ref string a);
         void Serialize(ref bool a);
         void Serialize(ref float a);
+        void Serialize(ref byte a);
+        void Serialize(ref short a);
+        void Serialize(ref double a);
 
         void Serialize(ref string[] a);
 
@@ -119,6 +122,18 @@ namespace api_serialize
         {
             a = mStream.readLong();
         }
+        public void Serialize(ref byte a)
+        {
+            a = mStream.readByte();
+        }
+        public void Serialize(ref short a)
+        {
+            a = mStream.readShort();
+        }
+        public void Serialize(ref double a)
+        {
+            a = mStream.readDouble();
+        }
         public void Serialize(ref string a)
         {
             a = mStream.readString();
@@ -197,6 +212,18 @@ namespace api_serialize
         public void Serialize(ref long a)
         {
             mStream.writeLong(a);
+        }
+        public void Serialize(ref byte a)
+        {
+            mStream.writeByte(a);
+        }
+        public void Serialize(ref short a)
+        {
+            mStream.writeShort(a);
+        }
+        public void Serialize(ref double a)
+        {
+            mStream.writeDouble(a);
         }
         public void Serialize(ref string a)
         {

@@ -25,10 +25,19 @@ namespace api_serialize
             //    return;
             //}
 
+            int[] ccc = new int[3];
+            //object[] ccc1 = (object[])ccc;
+            Array ccc1 = (Array)ccc;
+            if (ccc1.Length == 0)
+            {
+                return;
+            }
 
 
             //B b = SerializeTools.Deserialize<B>(SerializeTools.Serialize<B>(new B()));
             B bb = new B();
+            bb.array_int = new int[3];
+            bb.array_int[0] = 3;
             bb.array_a = new A[3];
             bb.array_a[1] = new A();
             bb.array_a[1].a = 1;
@@ -74,6 +83,7 @@ namespace api_serialize
     {
         public string ss;
         public int a;
+        public int[] array_int;
         public A[] array_a;
         public List<List<A>> list_a;
         public C c;
@@ -155,6 +165,48 @@ namespace api_serialize
                     stream.Serialize(ref iv);
                 }
             }
+            else if (type == typeof(short))
+            {
+                short iv = default(short);
+                if (stream.IsReader)
+                {
+                    stream.Serialize(ref iv);
+                    obj = iv;
+                }
+                else
+                {
+                    iv = (short)obj;
+                    stream.Serialize(ref iv);
+                }
+            }
+            else if (type == typeof(byte))
+            {
+                byte iv = default(byte);
+                if (stream.IsReader)
+                {
+                    stream.Serialize(ref iv);
+                    obj = iv;
+                }
+                else
+                {
+                    iv = (byte)obj;
+                    stream.Serialize(ref iv);
+                }
+            }
+            else if (type == typeof(double))
+            {
+                double iv = default(double);
+                if (stream.IsReader)
+                {
+                    stream.Serialize(ref iv);
+                    obj = iv;
+                }
+                else
+                {
+                    iv = (double)obj;
+                    stream.Serialize(ref iv);
+                }
+            }
             else if (type == typeof(long))
             {
                 long iv = default(long);
@@ -225,20 +277,25 @@ namespace api_serialize
                     }
                     else
                     {
-                        len = ((object[])obj).Length;
+                        len = ((Array)obj).Length;
                         stream.Serialize(ref len);
                     }
                 }
 
                 // 序列化具体数据
-                object[] array_value = (object[])obj;
+                Array array_value = (Array)obj;
                 for (int i = 0; i < len; i++)
                 {
-                    object o2 = array_value[i];
-                    SerializeImpl(embedtype, ref o2, stream);
+                    object o2 = null;
                     if (stream.IsReader)
                     {
-                        array_value[i] = o2;
+                        SerializeImpl(embedtype, ref o2, stream);
+                        array_value.SetValue(o2, i);
+                    }
+                    else
+                    {
+                        o2 = array_value.GetValue(i);
+                        SerializeImpl(embedtype, ref o2, stream);
                     }
                 }
             }
