@@ -179,6 +179,10 @@ namespace api_serialize
                     stream.Serialize(ref iv);
                 }
             }
+            else if (type == typeof(char))
+            { 
+            
+            }
             else if (type == typeof(byte))
             {
                 byte iv = default(byte);
