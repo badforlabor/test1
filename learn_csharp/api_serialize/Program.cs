@@ -314,7 +314,8 @@ namespace api_serialize
                 }
                 else
                 {
-                    iv = Convert.ToInt16(obj);
+                    //iv = Convert.ToInt16(obj);    // 可以用这个，也可以用下面那个，Convert的源代码就是下面那个！
+                    iv = ((IConvertible)obj).ToInt16(null);
                     stream.Serialize(ref iv);
                 }
             }
