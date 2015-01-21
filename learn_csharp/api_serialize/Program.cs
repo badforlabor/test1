@@ -10,6 +10,11 @@ namespace api_serialize
 {
     class Program
     {
+        enum EA
+        {
+            EA_1,
+            EA_2 = 20,
+        }
         static void Main(string[] args)
         {
             //A ccc = new A();
@@ -25,6 +30,11 @@ namespace api_serialize
             //    return;
             //}
 
+            EA ea = EA.EA_2;
+            int eaa = (int)ea;
+            TestSerializeObject(ea);
+
+
             int[] ccc = new int[3];
             //object[] ccc1 = (object[])ccc;
             Array ccc1 = (Array)ccc;
@@ -33,6 +43,15 @@ namespace api_serialize
                 return;
             }
 
+            Dictionary<int, int> dict = new Dictionary<int,int>();
+            dict.Add(10, 1);
+            TestSerializeObject<Dictionary<int, int>>(dict);
+
+            Dictionary<int, List<int>> dict2 = new Dictionary<int, List<int>>();
+            List<int> ddd = new List<int>();
+            ddd.Add(1);
+            dict2.Add(10, ddd);
+            TestSerializeObject<Dictionary<int, List<int>>>(dict2);
 
             //B b = SerializeTools.Deserialize<B>(SerializeTools.Serialize<B>(new B()));
             B bb = new B();
@@ -55,17 +74,34 @@ namespace api_serialize
             //    return;
             //}
 
+            //MLByteWriterBuffer buffer = new MLByteWriterBuffer();
+            //MLWriterStream writer = new MLByteWriterStream<MLByteWriterBuffer>(buffer);
+            //MLISerialize stream = new MLWriter(writer);
+            //SerializeTools.SerializeImpl(bb.GetType(), bb, stream);
+
+
+            //MLByteReaderBuffer buffer2 = new MLByteReaderBuffer(buffer.toByteArray());
+            //MLISerialize stream2 = new MLReader(new MLByteReaderStream<MLByteReaderBuffer>(buffer2));
+            //Object cc = null;
+            //SerializeTools.SerializeImpl(typeof(B), ref cc, stream2);
+
+            TestSerializeObject<B>(bb);
+        }
+
+        static void TestSerializeObject<T>(T obj)
+        {
             MLByteWriterBuffer buffer = new MLByteWriterBuffer();
             MLWriterStream writer = new MLByteWriterStream<MLByteWriterBuffer>(buffer);
             MLISerialize stream = new MLWriter(writer);
-            SerializeTools.SerializeImpl(bb.GetType(), bb, stream);
+            SerializeTools.SerializeImpl(typeof(T), obj, stream);
 
 
             MLByteReaderBuffer buffer2 = new MLByteReaderBuffer(buffer.toByteArray());
             MLISerialize stream2 = new MLReader(new MLByteReaderStream<MLByteReaderBuffer>(buffer2));
             Object cc = null;
-            SerializeTools.SerializeImpl(typeof(B), ref cc, stream2);
+            SerializeTools.SerializeImpl(typeof(T), ref cc, stream2);
         }
+
     }
     struct C
     {
@@ -81,13 +117,13 @@ namespace api_serialize
     }
     class B
     {
+        public Dictionary<A, int> dict_a;
         public string ss;
         public int a;
         public int[] array_int;
         public A[] array_a;
         public List<List<A>> list_a;
         public C c;
-        public Dictionary<A, int> dict_a;
     }
     class SerializeTools
     {
@@ -267,6 +303,21 @@ namespace api_serialize
                     stream.Serialize(ref iv);
                 }
             }
+            else if (type.IsEnum)
+            {
+                Type[] types = type.GetGenericArguments();
+                short iv = default(short);
+                if (stream.IsReader)
+                {
+                    stream.Serialize(ref iv);
+                    obj = Enum.ToObject(type, iv);
+                }
+                else
+                {
+                    iv = Convert.ToInt16(obj);
+                    stream.Serialize(ref iv);
+                }
+            }
             else if (type.IsArray)
             {
                 // 数组格式，第一位为数量，0表示0个，-1表示null；第二位以后的表示具体元素
@@ -373,6 +424,73 @@ namespace api_serialize
                 // 以后再写！
                 Type[] types = type.GetGenericArguments();
                 Console.WriteLine("xxxx filed:" + "IDictionary!");
+                Type keyType = types[0];
+                Type valueType = types[1];
+
+                int len = 0;
+                if (stream.IsReader)
+                {
+                    stream.Serialize(ref len);
+                    if (len == -1)  // -1表示空对象
+                    {
+                        obj = null;
+                        return;
+                    }
+                    obj = Activator.CreateInstance(type);
+                }
+                else
+                {
+                    if (obj == null)
+                    {
+                        // 空对象第一个字段为-1
+                        len = -1;
+                        stream.Serialize(ref len);
+                        return;
+                    }
+                    else
+                    {
+                        len = ((IDictionary)obj).Count;
+                        stream.Serialize(ref len);
+                    }
+                }
+
+                if (len > 0)
+                {
+                    IDictionary dict = (IDictionary)obj;
+                    Array akey = null;
+                    Array avalue = null;
+                    if (stream.IsReader)
+                    {
+
+                    }
+                    else
+                    {
+                        akey = Array.CreateInstance(keyType, len);
+                        avalue = Array.CreateInstance(valueType, len);
+                        dict.Keys.CopyTo(akey, 0);
+                        dict.Values.CopyTo(avalue, 0);
+                    }
+
+                    for (int i = 0; i < len; i++)
+                    {
+                        if (stream.IsReader)
+                        {
+                            object okey = null;
+                            object ovalue = null;
+                            SerializeImpl(keyType, ref okey, stream);
+                            SerializeImpl(valueType, ref ovalue, stream);
+                            dict.Add(okey, ovalue);
+                        }
+                        else
+                        {
+                            object okey = akey.GetValue(i);
+                            object ovalue = avalue.GetValue(i);
+                            SerializeImpl(keyType, ref okey, stream);
+                            SerializeImpl(valueType, ref ovalue, stream);
+                        }
+                    }
+                }
+
             }
             else
             {
