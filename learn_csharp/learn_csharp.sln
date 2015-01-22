@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "keyword_grandpa", "keyword_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_serialize", "api_serialize\api_serialize.csproj", "{374B75F8-CB1A-463C-8A19-04F42DA9E73E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_compress", "api_compress\api_compress.csproj", "{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{374B75F8-CB1A-463C-8A19-04F42DA9E73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{374B75F8-CB1A-463C-8A19-04F42DA9E73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{374B75F8-CB1A-463C-8A19-04F42DA9E73E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
