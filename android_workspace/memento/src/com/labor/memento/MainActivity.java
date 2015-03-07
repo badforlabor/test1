@@ -1,7 +1,10 @@
 package com.labor.memento;
 
+import java.io.File;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -30,6 +33,26 @@ public class MainActivity extends ActionBarActivity {
 		
 		FrontiaApplication.initFrontiaApplication(getApplicationContext());
 		Frontia.init(getApplicationContext(), CONF.API_KEY);
+		
+		// 显示一些日志
+		Log.i("storage", "环境信息 getDataDirectory："+Environment.getDataDirectory());
+		Log.i("storage", "环境信息 getDownloadCacheDirectory："+Environment.getDownloadCacheDirectory());
+		Log.i("storage", "环境信息 getExternalStorageDirectory："+Environment.getExternalStorageDirectory());
+		Log.i("storage", "环境信息 DIRECTORY_DOWNLOADS："+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+		Log.i("storage", "环境信息 getExternalStorageState："+Environment.getExternalStorageState());
+	
+		// 创建一些目录：
+		File dir = new File(CONF.LOCAL_ROOT_DIR);
+		if(!dir.exists())
+		{			
+			dir.mkdir();
+			Log.i("storage", "创建根目录：" + CONF.LOCAL_ROOT_DIR);
+		}
+		else
+		{			
+			Log.i("storage", "根目录已存在：" + CONF.LOCAL_ROOT_DIR);
+		}
+		
 	}
 
 	@Override
@@ -81,6 +104,20 @@ public class MainActivity extends ActionBarActivity {
 					startActivity(intent);
 				}
 			});
+			
+			Button btn2 = (Button)RootView.findViewById(R.id.button2);
+			btn2.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+
+					Intent intent = new Intent(PlaceholderFragment.this.getActivity().getApplicationContext(), 
+								RecordActivity.class);
+					startActivity(intent);
+				}
+			});
+			
 			return rootView;
 		}
 	}
