@@ -27,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 		FrontiaApplication.initFrontiaApplication(getApplicationContext());
 		Frontia.init(getApplicationContext(), CONF.API_KEY);
 	}
