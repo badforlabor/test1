@@ -1,0 +1,6 @@
+E:\125\isWeixin\app\build\intermediates\classes\debug
+E:\125\isWeixin\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-2ca688184e56f0260f52fade82e89320866bacec.jar
+E:\125\isWeixin\app\build\intermediates\pre-dexed\debug\httpmime-4.1.3-f037c22f5ff12210136387c11eb90e913fefe480.jar
+E:\125\isWeixin\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-347417cf0beeb7f3c2f0100e6595cd0836c3225b.jar
+E:\125\isWeixin\app\build\intermediates\pre-dexed\debug\Android_SDK_v1.2-ce16ab572427f494ae31ce9488a5428b383d8295.jar
+E:\125\isWeixin\app\build\intermediates\pre-dexed\debug\classes-e5da3391a5465013aa1f0f46c84bb68de6165450.jar

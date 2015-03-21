@@ -1,0 +1,2 @@
+Android Studio 1.0.0
+sdk android-21
