@@ -1,6 +1,0 @@
-E:\github\test1\as_workspace\memento\app\build\intermediates\classes\debug
-E:\github\test1\as_workspace\memento\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-6203959c5898bcaa1f8694da3e6433aa3fcacd81.jar
-E:\github\test1\as_workspace\memento\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-3f98778c077994ef719ab1dc5ff1f1393973e3b8.jar
-E:\github\test1\as_workspace\memento\app\build\intermediates\pre-dexed\debug\classes-e9617e68b1f30cf73dab54f4645ef4fe3a41a6bc.jar
-E:\github\test1\as_workspace\memento\app\build\intermediates\pre-dexed\debug\classes-da25374dd57a34be696a9869c9cfb48811744220.jar
-E:\github\test1\as_workspace\memento\app\build\intermediates\pre-dexed\debug\Baidu-Frontia-Android-2.0.8-7223855cd87dc98d415e721f63945537ff6a2f3a.jar

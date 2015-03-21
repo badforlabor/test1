@@ -1,5 +1,0 @@
-E:\github\test1\as_workspace\FrontiaDemo\app\build\intermediates\classes\debug
-E:\github\test1\as_workspace\FrontiaDemo\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-2ca688184e56f0260f52fade82e89320866bacec.jar
-E:\github\test1\as_workspace\FrontiaDemo\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-28fd9de4924aba58645bb10e96ff1c3850ec8567.jar
-E:\github\test1\as_workspace\FrontiaDemo\app\build\intermediates\pre-dexed\debug\classes-0a603e58fe6668009986ce8cc002d451fa400b90.jar
-E:\github\test1\as_workspace\FrontiaDemo\app\build\intermediates\pre-dexed\debug\Baidu-Frontia-Android-2.0.7-f111f72b8366a4c7c363ff3c94f5cd00462e4e94.jar
