@@ -3,15 +3,15 @@ package com.labor.memento;
 public class CONF {
 	public final static String API_KEY = "iG2ffdkYaq8kIjrSfvjMcUrf";
 	
-	// Ã²ËÆ»ñÈ¡ÎÄ¼şĞÅÏ¢»òÕßÉÏ´«ÎÄ¼şÊ±£¬Ö»ÄÜ´«µ½×Ô¼ºµÄ¸ùÄ¿Â¼ÏÂ¡£
+	// è²Œä¼¼è·å–æ–‡ä»¶ä¿¡æ¯æˆ–è€…ä¸Šä¼ æ–‡ä»¶æ—¶ï¼Œåªèƒ½ä¼ åˆ°è‡ªå·±çš„æ ¹ç›®å½•ä¸‹ã€‚
 	public final static String ROOT_DIR = "/apps/FrontiaDevDemo";
 	
 	public final static String LOCAL_ROOT_DIR = "/sdcard/FrontiaDevDemo";
 	
-	// ²âÊÔÏÂÔØÎÄ¼ş£º
+	// æµ‹è¯•ä¸‹è½½æ–‡ä»¶ï¼š
 	public final static String DOWNLOAD_FILE = "/apps/FrontiaDevDemo/helloworld.txt";	
-	// ²âÊÔÉÏ´«ÎÄ¼ş£º
+	// æµ‹è¯•ä¸Šä¼ æ–‡ä»¶ï¼š
 	public final static String UPLOAD_FILE = "/sdcard/FrontiaDevDemo/helloworld.txt";
-	// ²âÊÔÂ¼Òô
+	// æµ‹è¯•å½•éŸ³
 	public final static String REC_FILE = "/sdcard/FrontiaDevDemo/rec.3gp";
 }

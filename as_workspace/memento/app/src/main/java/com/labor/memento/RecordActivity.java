@@ -1,5 +1,5 @@
 /**
- * Â¼Òô½çÃæ£¬
+ * å½•éŸ³ç•Œé¢ï¼Œ
  */
 package com.labor.memento;
 
@@ -20,7 +20,7 @@ import android.widget.Button;
  */
 public class RecordActivity extends Activity {
 	
-	// Â¼Òôapi
+	// å½•éŸ³api
 	private MediaRecorder recorder = null;
 	private MediaPlayer player = null;
 	
@@ -31,7 +31,7 @@ public class RecordActivity extends Activity {
 		
 		setContentView(R.layout.record_activity);
 		
-		// ¿ªÊ¼Â¼Òô
+		// å¼€å§‹å½•éŸ³
 		Button btn1 = (Button)this.findViewById(R.id.rec_start);
 		btn1.setOnClickListener(new OnClickListener() {
 			
@@ -59,7 +59,7 @@ public class RecordActivity extends Activity {
 			}
 		});
 		
-		// Í£Ö¹Â¼Òô
+		// åœæ­¢å½•éŸ³
 		Button btn2 = (Button)this.findViewById(R.id.rec_stop);
 		btn2.setOnClickListener(new OnClickListener() {
 			
@@ -74,7 +74,7 @@ public class RecordActivity extends Activity {
 			}
 		});
 		
-		// ²¥·Å
+		// æ’­æ”¾
 		Button btn3 = (Button)this.findViewById(R.id.rec_play);
 		btn3.setOnClickListener(new OnClickListener() {
 			

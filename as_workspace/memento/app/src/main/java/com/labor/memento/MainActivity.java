@@ -34,23 +34,23 @@ public class MainActivity extends ActionBarActivity {
 		FrontiaApplication.initFrontiaApplication(getApplicationContext());
 		Frontia.init(getApplicationContext(), CONF.API_KEY);
 		
-		// ��ʾһЩ��־
-		Log.i("storage", "������Ϣ getDataDirectory��"+Environment.getDataDirectory());
-		Log.i("storage", "������Ϣ getDownloadCacheDirectory��"+Environment.getDownloadCacheDirectory());
-		Log.i("storage", "������Ϣ getExternalStorageDirectory��"+Environment.getExternalStorageDirectory());
-		Log.i("storage", "������Ϣ DIRECTORY_DOWNLOADS��"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-		Log.i("storage", "������Ϣ getExternalStorageState��"+Environment.getExternalStorageState());
+		// ????Щ???
+		Log.i("storage", "??????? getDataDirectory??"+Environment.getDataDirectory());
+		Log.i("storage", "??????? getDownloadCacheDirectory??"+Environment.getDownloadCacheDirectory());
+		Log.i("storage", "??????? getExternalStorageDirectory??"+Environment.getExternalStorageDirectory());
+		Log.i("storage", "??????? DIRECTORY_DOWNLOADS??"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+		Log.i("storage", "??????? getExternalStorageState??"+Environment.getExternalStorageState());
 	
-		// ����һЩĿ¼��
+		// ?????Щ????
 		File dir = new File(CONF.LOCAL_ROOT_DIR);
 		if(!dir.exists())
 		{			
 			dir.mkdir();
-			Log.i("storage", "������Ŀ¼��" + CONF.LOCAL_ROOT_DIR);
+			Log.i("storage", "??????????" + CONF.LOCAL_ROOT_DIR);
 		}
 		else
 		{			
-			Log.i("storage", "��Ŀ¼�Ѵ��ڣ�" + CONF.LOCAL_ROOT_DIR);
+			Log.i("storage", "??????????" + CONF.LOCAL_ROOT_DIR);
 		}
 		
 	}
@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 
-			// ���б�
+			// ???б?
 			Intent intent = new Intent(getApplicationContext(), 
 						RecordList.class);
 			startActivity(intent);

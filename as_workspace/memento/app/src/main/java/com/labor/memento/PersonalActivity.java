@@ -36,7 +36,7 @@ public class PersonalActivity extends Activity {
 		authority();
 	}
 	
-	// ÑéÖ¤ÕË»§
+	// éªŒè¯è´¦æˆ·
 	void authority()
 	{
 		ArrayList<String> list = new ArrayList<String>();
@@ -46,7 +46,7 @@ public class PersonalActivity extends Activity {
 		mCloudStorage = Frontia.getPersonalStorage();
 		authorization = Frontia.getAuthorization();
 		FrontiaAccount currentAccount = Frontia.getCurrentAccount();
-		// Èç¹ûµÇÂ½¹ı£¬ÄÇÃ´²»ĞèÒªÓÃ»§ÊäÈëÕË»§ÃÜÂë
+		// å¦‚æœç™»é™†è¿‡ï¼Œé‚£ä¹ˆä¸éœ€è¦ç”¨æˆ·è¾“å…¥è´¦æˆ·å¯†ç 
 		if(null != currentAccount && FrontiaAccount.Type.USER == currentAccount.getType()) {
 		    FrontiaUser user = (FrontiaUser) currentAccount;
 		    if(!MediaType.BAIDU.toString().equals(user.getPlatform())) {
@@ -78,7 +78,7 @@ public class PersonalActivity extends Activity {
 		    }
 		    
 		} else {
-			// ·ñÔòÈÃÍæ¼ÒÊäÈëÕËºÅÃÜÂë
+			// å¦åˆ™è®©ç©å®¶è¾“å…¥è´¦å·å¯†ç 
 		    authorization.authorize(this,MediaType.BAIDU.toString(),list,new AuthorizationListener() {
 		        
 		        @Override
@@ -105,24 +105,24 @@ public class PersonalActivity extends Activity {
 		}
 	}
 	
-	// ÏÔÊ¾½çÃæ
+	// æ˜¾ç¤ºç•Œé¢
 	void setupViews()
 	{
 		setContentView(R.layout.personal_activity);
 		
-		// ÏÔÊ¾´æ´¢¿Õ¼ä´óĞ¡
+		// æ˜¾ç¤ºå­˜å‚¨ç©ºé—´å¤§å°
 //		Quota();
 		
-		// ÏÔÊ¾ÎÄ¼şÁĞ±í
+		// æ˜¾ç¤ºæ–‡ä»¶åˆ—è¡¨
 //		ListFile();
 		
-		// ÎÄ¼ş²Ù×İ£¬ÏÂÔØ£¬É¾³ı£¬ÉÏ´«
+		// æ–‡ä»¶æ“çºµï¼Œä¸‹è½½ï¼Œåˆ é™¤ï¼Œä¸Šä¼ 
 //		DownloadFile();
 //		DeleteFile();
 		UploadFile();
 	}
 	
-	// »ñÈ¡Íæ¼ÒµÄÅä¶îĞÅÏ¢
+	// è·å–ç©å®¶çš„é…é¢ä¿¡æ¯
 	void Quota()
 	{
 		mCloudStorage.quota(new QuotaListener() {
@@ -130,19 +130,19 @@ public class PersonalActivity extends Activity {
 			@Override
 			public void onSuccess(QuotaResult arg0) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "Åä¶îĞÅÏ¢£º" + arg0.getTotal() + ", ÒÑÊ¹ÓÃ£º" + arg0.getUsed());
+				Log.i("storage", "é…é¢ä¿¡æ¯ï¼š" + arg0.getTotal() + ", å·²ä½¿ç”¨ï¼š" + arg0.getUsed());
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
 
-				Log.e("storage", "»ñÈ¡Åä¶îÊ§°Ü£¡");
+				Log.e("storage", "è·å–é…é¢å¤±è´¥ï¼");
 			}
 		});
 	}
 
-	// ÏÔÊ¾ËùÓĞÎÄ¼ş
+	// æ˜¾ç¤ºæ‰€æœ‰æ–‡ä»¶
 	void ListFile()
 	{
 		mCloudStorage.list(CONF.ROOT_DIR, "name", "asc", new FileListListener() {
@@ -150,11 +150,11 @@ public class PersonalActivity extends Activity {
 			@Override
 			public void onSuccess(List<FileInfoResult> arg0) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "»ñÈ¡ÎÄ¼şÁĞ±í³É¹¦£º" + arg0.size());
+				Log.i("storage", "è·å–æ–‡ä»¶åˆ—è¡¨æˆåŠŸï¼š" + arg0.size());
 				
 				for(FileInfoResult file : arg0)
 				{
-					Log.i("storage", "ÎÄ¼ş£º" + file.getPath());
+					Log.i("storage", "æ–‡ä»¶ï¼š" + file.getPath());
 				}
 				
 			}
@@ -162,41 +162,41 @@ public class PersonalActivity extends Activity {
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-				Log.e("storage", "»ñÈ¡ÎÄ¼şÁĞ±í´íÎó£º" + arg0 + ", msg=" + arg1);
+				Log.e("storage", "è·å–æ–‡ä»¶åˆ—è¡¨é”™è¯¯ï¼š" + arg0 + ", msg=" + arg1);
 			}
 		});
 		
 	}
 	
-	// ÏÂÔØÎÄ¼ş
+	// ä¸‹è½½æ–‡ä»¶
 	void DownloadFile()
 	{
-		// ±ØĞëµÄµÃ±£Ö¤Ä¿±êÎÄ¼şÂ·¾¶´æÔÚ£¬·ñÔò»áÊ§°Ü£¡
+		// å¿…é¡»çš„å¾—ä¿è¯ç›®æ ‡æ–‡ä»¶è·¯å¾„å­˜åœ¨ï¼Œå¦åˆ™ä¼šå¤±è´¥ï¼
 		mCloudStorage.downloadFile(CONF.DOWNLOAD_FILE, CONF.UPLOAD_FILE, new FileProgressListener() {
 			
 			@Override
 			public void onProgress(String arg0, long arg1, long arg2) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "ÏÂÔØ½ø¶È£¬ ÎÄ¼ş£º" + arg0 + ", ÒÑ´«Êä£º" + arg1 + "£¬×Ü´óĞ¡£º" + arg2);
+				Log.i("storage", "ä¸‹è½½è¿›åº¦ï¼Œ æ–‡ä»¶ï¼š" + arg0 + ", å·²ä¼ è¾“ï¼š" + arg1 + "ï¼Œæ€»å¤§å°ï¼š" + arg2);
 			}
 		},new FileTransferListener() {
 			
 			@Override
 			public void onSuccess(String arg0, String arg1) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "ÏÂÔØ³É¹¦£º" + arg0 + "£¬ÏÂÔØºóµÄÎÄ¼şÃûÎª£º" + arg1);
+				Log.i("storage", "ä¸‹è½½æˆåŠŸï¼š" + arg0 + "ï¼Œä¸‹è½½åçš„æ–‡ä»¶åä¸ºï¼š" + arg1);
 			}
 			
 			@Override
 			public void onFailure(String arg0, int arg1, String arg2) {
 				// TODO Auto-generated method stub
-				Log.e("storage", "ÏÂÔØÊ§°Ü£º" + arg0 + "£¬´íÎóÂë£º" + arg1 + "£¬ ÎÄ¼şÃû£º" + arg2);
+				Log.e("storage", "ä¸‹è½½å¤±è´¥ï¼š" + arg0 + "ï¼Œé”™è¯¯ç ï¼š" + arg1 + "ï¼Œ æ–‡ä»¶åï¼š" + arg2);
 			}
 		});
 		
 	}
 	
-	// É¾³ıÎÄ¼ş
+	// åˆ é™¤æ–‡ä»¶
 	void DeleteFile()
 	{
 		mCloudStorage.deleteFile(CONF.DOWNLOAD_FILE, new FileOperationListener() {
@@ -204,26 +204,26 @@ public class PersonalActivity extends Activity {
 			@Override
 			public void onSuccess(String arg0) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "É¾³ıÎÄ¼ş³É¹¦£º" + arg0);
+				Log.i("storage", "åˆ é™¤æ–‡ä»¶æˆåŠŸï¼š" + arg0);
 			}
 			
 			@Override
 			public void onFailure(String arg0, int arg1, String arg2) {
 				// TODO Auto-generated method stub
-				Log.e("storage", "É¾³ıÎÄ¼şÊ§°Ü£º" + arg0 + "£¬´íÎóÂë£º" + arg1 + ", " + arg2);
+				Log.e("storage", "åˆ é™¤æ–‡ä»¶å¤±è´¥ï¼š" + arg0 + "ï¼Œé”™è¯¯ç ï¼š" + arg1 + ", " + arg2);
 			}
 		});
 	}
 	
-	// ĞŞ¸ÄÎÄ¼şÄÚÈİ£¬²¢ÉÏ´«
+	// ä¿®æ”¹æ–‡ä»¶å†…å®¹ï¼Œå¹¶ä¸Šä¼ 
 	void UploadFile()
 	{
-		// ¶ÁÈ¡ÎÄ¼ş£¬È»ºóĞŞ¸ÄÄÚÈİÔÙÉÏ´«
+		// è¯»å–æ–‡ä»¶ï¼Œç„¶åä¿®æ”¹å†…å®¹å†ä¸Šä¼ 
 		try
 		{
 			FileOutputStream file = new FileOutputStream(CONF.UPLOAD_FILE, true);
 			StringBuffer sb = new StringBuffer();
-			sb.append("ĞŞ¸Ä¹ıºóµÄ£¡");
+			sb.append("ä¿®æ”¹è¿‡åçš„ï¼");
 			file.write(sb.toString().getBytes());	
 			file.close();
 		}
@@ -235,20 +235,20 @@ public class PersonalActivity extends Activity {
 			@Override
 			public void onProgress(String arg0, long arg1, long arg2) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "ÉÏ´«½ø¶È£º" + arg0 + "£¬ÒÑÉÏ´«£º" + arg1 + "£¬×Ü´óĞ¡£º" + arg2);
+				Log.i("storage", "ä¸Šä¼ è¿›åº¦ï¼š" + arg0 + "ï¼Œå·²ä¸Šä¼ ï¼š" + arg1 + "ï¼Œæ€»å¤§å°ï¼š" + arg2);
 			}
 		}, new FileUploadListener() {
 			
 			@Override
 			public void onSuccess(String arg0, FileInfoResult arg1) {
 				// TODO Auto-generated method stub
-				Log.i("storage", "ÉÏ´«Íê³É£º" +arg0 + ", ÎÄ¼şÂ·¾¶£º" + arg1.getPath());
+				Log.i("storage", "ä¸Šä¼ å®Œæˆï¼š" +arg0 + ", æ–‡ä»¶è·¯å¾„ï¼š" + arg1.getPath());
 			}
 			
 			@Override
 			public void onFailure(String arg0, int arg1, String arg2) {
 				// TODO Auto-generated method stub
-				Log.e("storage", "ÉÏ´«Ê§°Ü£º" + arg0 + ", ´íÎóÂë£º" + arg1 + ", " + arg2);
+				Log.e("storage", "ä¸Šä¼ å¤±è´¥ï¼š" + arg0 + ", é”™è¯¯ç ï¼š" + arg1 + ", " + arg2);
 			}
 		});
 	}

@@ -1,5 +1,5 @@
 /**
- * ��Ƶ�б����棬�鿴¼����������
+ * 音频列表界面，查看录音的数量。
  */
 package com.labor.memento;
 
