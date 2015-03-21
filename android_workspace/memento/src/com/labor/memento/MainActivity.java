@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -34,23 +34,23 @@ public class MainActivity extends ActionBarActivity {
 		FrontiaApplication.initFrontiaApplication(getApplicationContext());
 		Frontia.init(getApplicationContext(), CONF.API_KEY);
 		
-		// ÏÔÊ¾Ò»Ð©ÈÕÖ¾
-		Log.i("storage", "»·¾³ÐÅÏ¢ getDataDirectory£º"+Environment.getDataDirectory());
-		Log.i("storage", "»·¾³ÐÅÏ¢ getDownloadCacheDirectory£º"+Environment.getDownloadCacheDirectory());
-		Log.i("storage", "»·¾³ÐÅÏ¢ getExternalStorageDirectory£º"+Environment.getExternalStorageDirectory());
-		Log.i("storage", "»·¾³ÐÅÏ¢ DIRECTORY_DOWNLOADS£º"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-		Log.i("storage", "»·¾³ÐÅÏ¢ getExternalStorageState£º"+Environment.getExternalStorageState());
+		// ï¿½ï¿½Ê¾Ò»Ð©ï¿½ï¿½Ö¾
+		Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ getDataDirectoryï¿½ï¿½"+Environment.getDataDirectory());
+		Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ getDownloadCacheDirectoryï¿½ï¿½"+Environment.getDownloadCacheDirectory());
+		Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ getExternalStorageDirectoryï¿½ï¿½"+Environment.getExternalStorageDirectory());
+		Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ DIRECTORY_DOWNLOADSï¿½ï¿½"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+		Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ getExternalStorageStateï¿½ï¿½"+Environment.getExternalStorageState());
 	
-		// ´´½¨Ò»Ð©Ä¿Â¼£º
+		// ï¿½ï¿½ï¿½ï¿½Ò»Ð©Ä¿Â¼ï¿½ï¿½
 		File dir = new File(CONF.LOCAL_ROOT_DIR);
 		if(!dir.exists())
 		{			
 			dir.mkdir();
-			Log.i("storage", "´´½¨¸ùÄ¿Â¼£º" + CONF.LOCAL_ROOT_DIR);
+			Log.i("storage", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½" + CONF.LOCAL_ROOT_DIR);
 		}
 		else
 		{			
-			Log.i("storage", "¸ùÄ¿Â¼ÒÑ´æÔÚ£º" + CONF.LOCAL_ROOT_DIR);
+			Log.i("storage", "ï¿½ï¿½Ä¿Â¼ï¿½Ñ´ï¿½ï¿½Ú£ï¿½" + CONF.LOCAL_ROOT_DIR);
 		}
 		
 	}
@@ -70,6 +70,12 @@ public class MainActivity extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+
+			// ï¿½ï¿½ï¿½Ð±ï¿½
+			Intent intent = new Intent(getApplicationContext(), 
+						RecordList.class);
+			startActivity(intent);
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
