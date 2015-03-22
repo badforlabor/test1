@@ -10,108 +10,203 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * @author harold
- *
  */
 public class RecordActivity extends Activity {
-	
-	// 录音api
-	private MediaRecorder recorder = null;
-	private MediaPlayer player = null;
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.record_activity);
-		
-		// 开始录音
-		Button btn1 = (Button)this.findViewById(R.id.rec_start);
-		btn1.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(recorder == null)
-				{
-					recorder = new MediaRecorder();
-					recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-					recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-					recorder.setOutputFile(CONF.REC_FILE);
-					recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-					try {
-						recorder.prepare();
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					recorder.start();					
-				}
-			}
-		});
-		
-		// 停止录音
-		Button btn2 = (Button)this.findViewById(R.id.rec_stop);
-		btn2.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(recorder != null)
-				{
-					recorder.stop();	
-					recorder = null;
-				}
-			}
-		});
-		
-		// 播放
-		Button btn3 = (Button)this.findViewById(R.id.rec_play);
-		btn3.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(player == null)
-				{
-					player = new MediaPlayer();
-					try {
-						player.setOnCompletionListener(new OnCompletionListener() {
-							
-							@Override
-							public void onCompletion(MediaPlayer arg0) {
-								// TODO Auto-generated method stub
-								player = null;
-							}
-						});
-						player.setDataSource(CONF.REC_FILE);
-						player.prepare();
-						player.start();
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SecurityException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-			}
-		});
-	}
+
+    // 录音api
+    private MediaRecorder recorder = null;
+    private MediaPlayer player = null;
+    TextView label_tip = null;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.record_activity);
+
+        label_tip = (TextView)this.findViewById(R.id.rec_label_tip);
+        Button btnTest = (Button) this.findViewById(R.id.rec_testbtn);
+        btnTest.setOnTouchListener(new View.OnTouchListener() {
+            float y = 0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                    Log.i("api-test", "event=" + event.getAction() + ", x=" + event.getRawX() + ", y=" + event.getRawY());
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    // 开始录音
+                    StartRecord();
+                    y = event.getRawY();
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP){
+                    // 停止录音
+                    StopRecord((event.getRawY() - y < - 100));
+                    y = 0;
+                }
+                else if(event.getAction() == MotionEvent.ACTION_MOVE){
+                    if(event.getRawY() - y < -100){
+                        label_tip.setText("松开之后即可取消录音");
+                    }
+                }
+
+                return false;
+            }
+        });
+
+
+        // 开始录音
+        Button btn1 = (Button) this.findViewById(R.id.rec_start);
+        btn1.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                StartRecord();
+            }
+        });
+
+        // 停止录音
+        Button btn2 = (Button) this.findViewById(R.id.rec_stop);
+        btn2.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                StopRecord();
+            }
+        });
+
+        // 播放
+        Button btn3 = (Button) this.findViewById(R.id.rec_play);
+        btn3.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                PlayRecord();
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.i("api-test", "activity stop!");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i("api-test", "activity pause!");
+
+        // 停止录音
+        StopRecord();
+    }
+
+    void StopRecord(){
+        StopRecord(true);
+    }
+    void StopRecord(boolean notsaved){
+        if (recorder != null) {
+            label_tip.setText("结束录音");
+            recorder.stop();
+            recorder.release();
+            recorder = null;
+
+            // 将文件拷贝到日志目录
+            if(!notsaved){
+                RecordInfo ri = new RecordInfo("test");
+                ri.SaveTmpRecordFile();
+            }
+        }
+    }
+
+    void StartRecord(){
+
+        if (recorder == null) {
+            label_tip.setText("开始录音");
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFile(CONF.REC_FILE);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            recorder.setMaxFileSize(1000 * 1000 * 4);   // 1M
+            recorder.setMaxDuration(10 * 60 * 1000);    // 10分钟
+            recorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+                @Override
+                public void onInfo(MediaRecorder mr, int what, int extra) {
+                    Log.i("api-test", "recorder-what=" + what + ", amp=" + mr.getMaxAmplitude());
+                }
+            });
+            try {
+                recorder.prepare();
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            recorder.start();
+        }
+    }
+
+    void PlayRecord(){
+        if (player == null) {
+            label_tip.setText("播放录音");
+            player = new MediaPlayer();
+            try {
+                player.setOnCompletionListener(new OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer arg0) {
+                        // TODO Auto-generated method stub
+                        player = null;
+                    }
+                });
+                player.setDataSource(CONF.REC_FILE);
+                player.prepare();
+                player.start();
+            } catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+        else{
+            if(player != null){
+                label_tip.setText("结束播放！");
+                try {
+                    player.stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                player = null;
+            }
+
+        }
+    }
 }

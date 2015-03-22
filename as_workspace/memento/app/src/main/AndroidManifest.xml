@@ -50,7 +50,7 @@
         </activity>
         <activity android:name="com.labor.memento.PersonalActivity" />
         <activity android:name="com.labor.memento.RecordActivity" />
-        <activity android:name="com.labor.memento.RecordList" />
+        <activity android:name="com.labor.memento.RecordListActivity" />
     </application>
 
 </manifest>

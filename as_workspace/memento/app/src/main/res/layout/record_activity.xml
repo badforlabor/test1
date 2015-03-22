@@ -36,4 +36,21 @@
         android:layout_y="78dp"
         android:text="stop" />
 
+    <Button
+        android:id="@+id/rec_testbtn"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_x="95dp"
+        android:layout_y="373dp"
+        android:text="测试按钮事件" />
+
+    <TextView
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/rec_label_tip"
+        android:layout_x="69dp"
+        android:layout_y="221dp" />
+
 </AbsoluteLayout>

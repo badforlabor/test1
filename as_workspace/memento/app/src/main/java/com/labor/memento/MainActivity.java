@@ -54,6 +54,17 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
+    public static class FileUtil {
+        public static void MakeDir(String fullpath){
+            File dir = new File(fullpath);
+            if(!dir.exists()){
+                dir.mkdir();
+            }
+        }
+        public static void CopyFile(String src, String dst){
+
+        }
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
 
 			// ???б?
 			Intent intent = new Intent(getApplicationContext(), 
-						RecordList.class);
+						RecordListActivity.class);
 			startActivity(intent);
 			
 			return true;
@@ -123,6 +134,17 @@ public class MainActivity extends ActionBarActivity {
 					startActivity(intent);
 				}
 			});
+
+            Button btn3 = (Button)RootView.findViewById(R.id.main_btn_list);
+            btn3.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PlaceholderFragment.this.getActivity().getApplicationContext(),
+                                RecordListActivity.class);
+                    startActivity(intent);
+                }
+            });
+
 			
 			return rootView;
 		}
