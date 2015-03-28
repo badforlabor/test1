@@ -1,0 +1,14 @@
+
+
+sql="CREATE TABLE IF NOT EXISTS MusicList (id integer primary key AutoIncrement,name varchar(20),path varchar(20))";
+
+
+CREATE TABLE IF NOT EXISTS recordinfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(20), data BIGINT)
+
+SELECT count(id) from recordinfo;
+
+INSERT INTO recordinfo VALUES(NULL,123,111);
+
+UPDATE recordinfo SET data=112 where id=1;
+UPDATE recordinfo SET data=123, name='aaa' where id=1;
+

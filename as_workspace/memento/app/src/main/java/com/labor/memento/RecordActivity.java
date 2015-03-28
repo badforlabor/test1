@@ -6,6 +6,9 @@ package com.labor.memento;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
@@ -14,7 +17,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -129,8 +134,7 @@ public class RecordActivity extends Activity {
 
             // 将文件拷贝到日志目录
             if(!notsaved){
-                RecordInfo ri = new RecordInfo("test");
-                ri.SaveTmpRecordFile();
+                PendingSaveRecord();
             }
         }
     }
@@ -166,8 +170,20 @@ public class RecordActivity extends Activity {
     }
 
     void PlayRecord(){
+        PlayRecord(true);
+    }
+    // 播放开关（点击一下播放，再点击一下停止播放）
+    // incall:使用听筒播放声音
+    void PlayRecord(boolean incall){
         if (player == null) {
             label_tip.setText("播放录音");
+
+            // 设置使用听筒播放声音
+            if(incall){
+                AudioManager am = (AudioManager)this.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                am.setMode(AudioManager.MODE_IN_CALL);
+            }
+
             player = new MediaPlayer();
             try {
                 player.setOnCompletionListener(new OnCompletionListener() {
@@ -176,6 +192,7 @@ public class RecordActivity extends Activity {
                     public void onCompletion(MediaPlayer arg0) {
                         // TODO Auto-generated method stub
                         player = null;
+                        OnStopAudio();
                     }
                 });
                 player.setDataSource(CONF.REC_FILE);
@@ -205,8 +222,38 @@ public class RecordActivity extends Activity {
                     e.printStackTrace();
                 }
                 player = null;
+                OnStopAudio();
             }
 
         }
+    }
+    void OnStopAudio(){
+        AudioManager am = (AudioManager)this.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        am.setMode(AudioManager.MODE_NORMAL);
+    }
+
+    void PendingSaveRecord(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_record_info);
+        dialog.setTitle("录音信息");
+
+        final Spinner spinner = (Spinner)dialog.findViewById(R.id.ri_spinner01);
+        String[] str = {"test", "工作", "家庭"};
+        ArrayAdapter aa = new ArrayAdapter(dialog.getContext(), android.R.layout.simple_spinner_item, str);
+        spinner.setAdapter(aa);
+
+        Button ok = (Button)dialog.findViewById(R.id.ri_ok);
+        ok.setOnClickListener(new OnClickListener() {
+            Dialog tmp = dialog;
+
+            @Override
+            public void onClick(View v) {
+                RecordInfo ri = new RecordInfo("test");
+                ri.SaveTmpRecordFile();
+                tmp.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
