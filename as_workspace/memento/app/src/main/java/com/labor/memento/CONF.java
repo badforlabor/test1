@@ -19,6 +19,8 @@ public class CONF {
     public final static String ROOT_MEMENTO_DIR = "/apps/FrontiaDevDemo/memento";
     // 录音文件
     public final static String ROOT_MEMETO_AUDIO_DIR = "/apps/FrontiaDevDemo/memento/audio";
+    public final static String LOCAL_ROOT_MEMENTO_AUDIO_DIR = "/sdcard/FrontiaDevDemo/memento/audio";
     // db文件
     public final static String DB_MEMENTO_FILE = "/apps/FrontiaDevDemo/memento/memento.db";
+    public final static String LOCAL_DB_MEMENTO_FILE = "/sdcard/FrontiaDevDemo/memento/memento.db";
 }

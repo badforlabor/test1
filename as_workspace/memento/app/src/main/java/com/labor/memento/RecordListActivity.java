@@ -3,19 +3,11 @@
  */
 package com.labor.memento;
 
-import java.util.ArrayList;
-
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class RecordListActivity extends Activity {
 	@Override
@@ -29,7 +21,7 @@ public class RecordListActivity extends Activity {
 	{
 		ListView list1 = (ListView)this.findViewById(R.id.listView1);
 		Log.i("list", "width=" + list1.getWidth() + ", height=" + list1.getHeight());
-		list1.setAdapter(new ContentAdapter(this));
+		list1.setAdapter(new ListRecordAdapter(this));
 		Log.i("list", "22 width=" + list1.getWidth() + ", height=" + list1.getHeight());
 	}
 }

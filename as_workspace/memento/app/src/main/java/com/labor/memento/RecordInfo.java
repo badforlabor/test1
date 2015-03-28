@@ -9,22 +9,24 @@ public class RecordInfo {
     String tag = "none";
     long date;
     String fileName = "";
-    public RecordInfo(String tag){
+
+    public RecordInfo(String tag) {
+        id = Utils.DBUtil.RadioID;
         this.tag = tag;
         date = System.currentTimeMillis();
-        fileName = "" + date + ".3gp";
+        fileName = date + ".3gp";
     }
-    public void SaveTmpRecordFile(){
-        if(id == 0)        {
+
+    public void SaveTmpRecordFile() {
+        if (id == 0) {
             return;
         }
 
         // 读取录音文件，然后存起来
-        MainActivity.FileUtil.MakeDir(CONF.ROOT_MEMETO_AUDIO_DIR);
-        MainActivity.FileUtil.CopyFile(CONF.REC_FILE, CONF.ROOT_MEMETO_AUDIO_DIR + "/" + fileName);
-    }
+        Utils.FileUtil.MakeDir(CONF.LOCAL_ROOT_MEMENTO_AUDIO_DIR);
+        Utils.FileUtil.CopyFile(CONF.REC_FILE, CONF.LOCAL_ROOT_MEMENTO_AUDIO_DIR + "/" + fileName);
 
-    public static class DBUtil{
-
+        // 告知数据库
+//        Utils.DBUtil.Insert(this);
     }
 }
