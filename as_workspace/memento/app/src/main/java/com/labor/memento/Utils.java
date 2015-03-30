@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by harold on 2015/3/23.
@@ -19,6 +20,7 @@ public class Utils {
 
     public static void Init() {
         DBUtil.Init();
+        RecordInfo.InitDB();
     }
 
     public static class DBUtil {
@@ -34,6 +36,7 @@ public class Utils {
                         "(_id INTEGER PRIMARY KEY AUTOINCREMENT, tag VARCHAR, date BIGINT, fileName TEXT)");
                 Cursor cursor = db.rawQuery("SELECT count(_id) from recordinfo", null);
                 RadioID = cursor.moveToNext() ? cursor.getInt(0) : 0;
+                Log.i("storage", "init db, radio-id=" + RadioID);
                 db.close();
             } catch (Exception e) {
                 Log.e("api-test", e.getMessage());
@@ -42,7 +45,7 @@ public class Utils {
 
         public static void Insert(RecordInfo ri) {
             SQLiteDatabase db = SQLiteDatabase.openDatabase(CONF.LOCAL_DB_MEMENTO_FILE, null, Context.MODE_PRIVATE, null);
-            db.execSQL("INSERT INTO recordinfo VALUES(NULL, ?, ?)", new Object[]{ri.tag, ri.date, ri.fileName});
+            db.execSQL("INSERT INTO recordinfo VALUES(NULL, ?, ?, ?)", new Object[]{ri.tag, ri.date, ri.fileName});
             db.close();
             RadioID++;
         }
@@ -51,6 +54,37 @@ public class Utils {
             SQLiteDatabase db = SQLiteDatabase.openDatabase(CONF.LOCAL_DB_MEMENTO_FILE, null, Context.MODE_PRIVATE, null);
             db.execSQL("UPDATE recordinfo SET tag='?', date=?, filename='?' where id=" + ri.id, new Object[]{ri.tag, ri.date, ri.fileName});
             db.close();
+        }
+
+        // 获取某个
+        public static RecordInfo Select(int id){
+            return null;
+        }
+        public static ArrayList<RecordInfo> SelectAll(){
+            ArrayList<RecordInfo> ret = new ArrayList<RecordInfo>();
+
+            SQLiteDatabase db = null;
+            try {
+                db = SQLiteDatabase.openDatabase(CONF.LOCAL_DB_MEMENTO_FILE, null, Context.MODE_PRIVATE, null);
+                Cursor cursor = db.rawQuery("SELECT * from recordinfo", null);
+
+                while(cursor.moveToNext()){
+                    RecordInfo ri = new RecordInfo();
+                    ri.id = cursor.getLong(0);
+                    ri.tag = cursor.getString(1);
+                    ri.date = cursor.getLong(2);
+                    ri.fileName = cursor.getString(3);
+
+                    if(!ri.fileName.isEmpty()){
+                        ret.add(ri);
+                    }
+                }
+
+                db.close();
+            } catch (Exception e) {
+                Log.e("api-test", "failed select:" + e.getMessage());
+            }
+            return ret;
         }
     }
 

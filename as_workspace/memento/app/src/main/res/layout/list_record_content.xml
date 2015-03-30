@@ -28,5 +28,13 @@
             android:layout_height="wrap_content"
             android:text="播放"
             android:id="@+id/list_rec_co_btn_play" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大声播放"
+            android:id="@+id/list_rec_co_btn_playloud"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
+
 </LinearLayout>

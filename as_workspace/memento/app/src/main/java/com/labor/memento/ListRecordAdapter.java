@@ -1,6 +1,10 @@
 package com.labor.memento;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,23 +18,19 @@ import android.widget.TextView;
 
 public class ListRecordAdapter extends BaseAdapter {
 	private Context context;
-	ArrayList<Integer> list = new ArrayList<Integer>();
+	ArrayList<RecordInfo> list = new ArrayList<RecordInfo>();
 	
 	public ListRecordAdapter(Context context)
 	{
-		this.context = context;	
-		list.add(1);
-		list.add(3);
-		list.add(2);
-		list.add(4);
-		list.add(1);
-		list.add(3);
-		list.add(2);
-		list.add(4);
-		list.add(1);
-		list.add(3);
-		list.add(2);
-		list.add(4);
+		this.context = context;
+        list = RecordInfo.records;
+        Collections.sort(list, new Comparator<RecordInfo>() {
+            @Override
+            public int compare(RecordInfo lhs, RecordInfo rhs) {
+                // id由大到小
+                return lhs.id > rhs.id ? 1 : 0;
+            }
+        });
 	}
 	@Override
 	public int getCount() {
@@ -44,7 +44,7 @@ public class ListRecordAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int arg0) {
-		return list.get(arg0);
+		return list.get(arg0).id;
 	}
 
 	@Override
@@ -55,11 +55,17 @@ public class ListRecordAdapter extends BaseAdapter {
 			try
 			{
 				view = LayoutInflater.from(context).inflate(R.layout.liaotian, parent, false);
-
+                RecordInfo ri = list.get(arg0);
                 TextView t1 = (TextView)view.findViewById(R.id.name);
-				t1.setText("name-" + list.get(arg0));
+				t1.setText("tag-" + ri.tag);
+                t1 = (TextView)view.findViewById(R.id.lastmsg);
+                t1.setText("name=" + ri.fileName);
+                t1 = (TextView)view.findViewById(R.id.time);
+                t1.setText("" + DateFormat.getDateInstance().format(new Date(ri.date)));
 
-                view.setTag(""+list.get((arg0)));
+
+
+                view.setTag(ri.id);
                 view.setClickable(true);
 				view.setOnClickListener(new OnClickListener() {
 					
@@ -70,7 +76,7 @@ public class ListRecordAdapter extends BaseAdapter {
 
                         Intent intent = new Intent(arg0.getRootView().getContext(),
                                 RecordContentActivity.class);
-                        intent.putExtra("tag", arg0.getTag().toString());
+                        intent.putExtra("tag", ((long)arg0.getTag()));
                         arg0.getRootView().getContext().startActivity(intent);
 					}
 				});	

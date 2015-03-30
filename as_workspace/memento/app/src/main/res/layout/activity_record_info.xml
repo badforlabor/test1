@@ -30,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认"
-            android:id="@+id/ri_ok" />
+            android:id="@+id/ri_ok"
+            android:layout_gravity="right" />
     </LinearLayout>
 
 </LinearLayout>

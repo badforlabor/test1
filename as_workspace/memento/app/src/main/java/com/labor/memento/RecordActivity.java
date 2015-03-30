@@ -8,6 +8,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -32,12 +33,15 @@ public class RecordActivity extends Activity {
     private MediaPlayer player = null;
     TextView label_tip = null;
 
+    String parent = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.record_activity);
+
+        parent = getIntent().getStringExtra("parent");
 
         label_tip = (TextView)this.findViewById(R.id.rec_label_tip);
         Button btnTest = (Button) this.findViewById(R.id.rec_testbtn);
@@ -170,66 +174,20 @@ public class RecordActivity extends Activity {
     }
 
     void PlayRecord(){
-        PlayRecord(true);
+        PlayRecord(true, CONF.REC_FILE);
     }
     // 播放开关（点击一下播放，再点击一下停止播放）
-    // incall:使用听筒播放声音
-    void PlayRecord(boolean incall){
-        if (player == null) {
+    // incall:使用听筒播放声音；fullname：路径全名
+    protected  void PlayRecord(boolean incall, String fullname){
+
+        if(!MyMediaPlayer.Singleton(this).IsPlaying()){
             label_tip.setText("播放录音");
-
-            // 设置使用听筒播放声音
-            if(incall){
-                AudioManager am = (AudioManager)this.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                am.setMode(AudioManager.MODE_IN_CALL);
-            }
-
-            player = new MediaPlayer();
-            try {
-                player.setOnCompletionListener(new OnCompletionListener() {
-
-                    @Override
-                    public void onCompletion(MediaPlayer arg0) {
-                        // TODO Auto-generated method stub
-                        player = null;
-                        OnStopAudio();
-                    }
-                });
-                player.setDataSource(CONF.REC_FILE);
-                player.prepare();
-                player.start();
-            } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
+            MyMediaPlayer.Singleton(this).PlaySound(incall, fullname);
         }
         else{
-            if(player != null){
-                label_tip.setText("结束播放！");
-                try {
-                    player.stop();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                player = null;
-                OnStopAudio();
-            }
-
+            label_tip.setText("结束播放！");
+            MyMediaPlayer.Singleton(this).StopPlay();
         }
-    }
-    void OnStopAudio(){
-        AudioManager am = (AudioManager)this.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        am.setMode(AudioManager.MODE_NORMAL);
     }
 
     void PendingSaveRecord(){
@@ -238,7 +196,7 @@ public class RecordActivity extends Activity {
         dialog.setTitle("录音信息");
 
         final Spinner spinner = (Spinner)dialog.findViewById(R.id.ri_spinner01);
-        String[] str = {"test", "工作", "家庭"};
+        String[] str = CONF.CATEGORY_RECORD;
         ArrayAdapter aa = new ArrayAdapter(dialog.getContext(), android.R.layout.simple_spinner_item, str);
         spinner.setAdapter(aa);
 
@@ -251,9 +209,30 @@ public class RecordActivity extends Activity {
                 RecordInfo ri = new RecordInfo("test");
                 ri.SaveTmpRecordFile();
                 tmp.dismiss();
+
+                if(parent == ""){
+                    // 返回到主界面
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    // 清除页面堆栈，这样返回主界面之后再次点击返回就不会再次回到这个界面了
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else{
+                    // 返回录音内容界面
+                    Intent intent = new Intent(v.getContext(), RecordContentActivity.class);
+                    intent.putExtra("tag", ri.id);
+                    // 清除页面堆栈，这样返回主界面之后再次点击返回就不会再次回到这个界面了
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
 
         dialog.show();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyMediaPlayer.Singleton(this).StopPlay();
     }
 }

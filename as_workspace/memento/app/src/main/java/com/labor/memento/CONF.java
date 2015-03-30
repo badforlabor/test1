@@ -23,4 +23,7 @@ public class CONF {
     // db文件
     public final static String DB_MEMENTO_FILE = "/apps/FrontiaDevDemo/memento/memento.db";
     public final static String LOCAL_DB_MEMENTO_FILE = "/sdcard/FrontiaDevDemo/memento/memento.db";
+
+    // 分类
+    public final static String[] CATEGORY_RECORD = {"test", "工作", "家庭"};
 }

@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by harold on 2015/3/28.
@@ -18,12 +21,13 @@ public class ListRecordContentAdapter extends BaseAdapter {
 
     Context mContext = null;
 
-    ArrayList<Integer> list = new ArrayList<Integer>();
+    ArrayList<String> list = new ArrayList<String>();
+    RecordInfo mRI = null;
 
-    public ListRecordContentAdapter(Context context){
+    public ListRecordContentAdapter(Context context, RecordInfo ri){
         mContext = context;
-        list.add(1);
-        list.add(3);
+        mRI = ri;
+        list.add(ri.fileName);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class ListRecordContentAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return list.get(position);
+        return (position);
     }
 
     @Override
@@ -48,14 +52,30 @@ public class ListRecordContentAdapter extends BaseAdapter {
         {
             try {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.list_record_content, parent, false);
+
+                TextView time = (TextView)convertView.findViewById(R.id.list_rec_co_time);
+                time.setText(DateFormat.getDateInstance().format(new Date(mRI.date)));
+
                 Button btn = (Button) convertView.findViewById(R.id.list_rec_co_btn_play);
                 btn.setTag("" + list.get(position));
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.i("storage", "tag=" + v.getTag());
+                        MyMediaPlayer.Singleton(v.getContext()).PlaySound(true, CONF.LOCAL_ROOT_MEMENTO_AUDIO_DIR + "/" + v.getTag());
                     }
                 });
+
+                btn = (Button) convertView.findViewById(R.id.list_rec_co_btn_playloud);
+                btn.setTag("" + list.get(position));
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i("storage", "tag=" + v.getTag());
+                        MyMediaPlayer.Singleton(v.getContext()).PlaySound(false, CONF.LOCAL_ROOT_MEMENTO_AUDIO_DIR + "/" + v.getTag());
+                    }
+                });
+
             } catch (Exception e) {
                 Log.e("storage", "get view failed");
             }
