@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -51,7 +52,7 @@ public class RecordActivity extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
 
                 if (event.getAction() != MotionEvent.ACTION_MOVE) {
-                    Log.i("api-test", "event=" + event.getAction() + ", x=" + event.getRawX() + ", y=" + event.getRawY());
+                    Log.i("CONF.API_TEST", "event=" + event.getAction() + ", x=" + event.getRawX() + ", y=" + event.getRawY());
                 }
 
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
@@ -113,14 +114,14 @@ public class RecordActivity extends Activity {
     protected void onStop() {
         super.onStop();
 
-        Log.i("api-test", "activity stop!");
+        Log.i("CONF.API_TEST", "activity stop!");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        Log.i("api-test", "activity pause!");
+        Log.i("CONF.API_TEST", "activity pause!");
 
         // 停止录音
         StopRecord();
@@ -157,7 +158,7 @@ public class RecordActivity extends Activity {
             recorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
                 @Override
                 public void onInfo(MediaRecorder mr, int what, int extra) {
-                    Log.i("api-test", "recorder-what=" + what + ", amp=" + mr.getMaxAmplitude());
+                    Log.i("CONF.API_TEST", "recorder-what=" + what + ", amp=" + mr.getMaxAmplitude());
                 }
             });
             try {
@@ -199,6 +200,18 @@ public class RecordActivity extends Activity {
         String[] str = CONF.CATEGORY_RECORD;
         ArrayAdapter aa = new ArrayAdapter(dialog.getContext(), android.R.layout.simple_spinner_item, str);
         spinner.setAdapter(aa);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        Log.i("CONF.API_TEST", "spinner selected idx=" + spinner.getSelectedItemPosition() + ", obj=" + spinner.getSelectedItem());
 
         Button ok = (Button)dialog.findViewById(R.id.ri_ok);
         ok.setOnClickListener(new OnClickListener() {
@@ -206,11 +219,11 @@ public class RecordActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                RecordInfo ri = new RecordInfo("test");
+                RecordInfo ri = new RecordInfo("" + spinner.getSelectedItem());
                 ri.SaveTmpRecordFile();
                 tmp.dismiss();
 
-                if(parent == ""){
+                if(parent == null || parent.isEmpty()){
                     // 返回到主界面
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     // 清除页面堆栈，这样返回主界面之后再次点击返回就不会再次回到这个界面了

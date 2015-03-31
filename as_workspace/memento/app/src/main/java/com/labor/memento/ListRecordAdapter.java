@@ -28,7 +28,7 @@ public class ListRecordAdapter extends BaseAdapter {
             @Override
             public int compare(RecordInfo lhs, RecordInfo rhs) {
                 // id由大到小
-                return lhs.id > rhs.id ? 1 : 0;
+                return lhs.id < rhs.id ? -1 : 0;
             }
         });
 	}

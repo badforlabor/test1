@@ -39,7 +39,7 @@ public class Utils {
                 Log.i("storage", "init db, radio-id=" + RadioID);
                 db.close();
             } catch (Exception e) {
-                Log.e("api-test", e.getMessage());
+                Log.e("CONF.API_TEST", e.getMessage());
             }
         }
 
@@ -82,7 +82,7 @@ public class Utils {
 
                 db.close();
             } catch (Exception e) {
-                Log.e("api-test", "failed select:" + e.getMessage());
+                Log.e("CONF.API_TEST", "failed select:" + e.getMessage());
             }
             return ret;
         }
@@ -98,7 +98,7 @@ public class Utils {
                 }
             }
             catch(Exception e){
-                Log.e("api-test", "io exception=" + e.getMessage());
+                Log.e("CONF.API_TEST", "io exception=" + e.getMessage());
             }
         }
 
@@ -119,7 +119,7 @@ public class Utils {
                 in.close();
                 out.close();
             } catch (Exception e) {
-                Log.e("api-test", "io exception=" + e.getMessage());
+                Log.e("CONF.API_TEST", "io exception=" + e.getMessage());
             }
         }
         public static void RemoveFile(String fullpath){
@@ -130,7 +130,7 @@ public class Utils {
                 }
             }
             catch(Exception e){
-                Log.e("api-test", "io exception=" + e.getMessage());
+                Log.e("CONF.API_TEST", "io exception=" + e.getMessage());
             }
         }
     }

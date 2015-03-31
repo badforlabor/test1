@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class MyMediaPlayer {
 
     private AudioManager AM = null;
     private MediaPlayer player = null;
+    int MusicVolume = -1;
 
     public void PlaySound(String fullname){
         PlaySoundImpl(false, fullname);
@@ -50,7 +52,14 @@ public class MyMediaPlayer {
             if(incall){
 
                 AudioManager am = AM;
+                Log.i(CONF.API_TEST, "AudioManager mute=" + am.isMicrophoneMute() + ", volume=" + am.getStreamVolume(AudioManager.MODE_IN_CALL)
+                    + ", max music=" + am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) + "," + am.getStreamVolume(AudioManager.STREAM_MUSIC));
                 am.setMode(AudioManager.MODE_IN_CALL);
+                MusicVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+                if(MusicVolume <= 0)
+                {
+                    am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 3, 0);
+                }
             }
 
             player = new MediaPlayer();
@@ -89,6 +98,10 @@ public class MyMediaPlayer {
     void OnStopAudio(){
         AudioManager am = AM;
         am.setMode(AudioManager.MODE_NORMAL);
+        if(MusicVolume != -1){
+            MusicVolume = -1;
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, MusicVolume, 0);
+        }
     }
 
 }
