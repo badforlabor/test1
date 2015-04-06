@@ -14,10 +14,16 @@ public class RecordListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record_list_activity);
-		
-		SetListData();
+
+        SetListData();
 	}
-	void SetListData()
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    void SetListData()
 	{
 		ListView list1 = (ListView)this.findViewById(R.id.listView1);
 		Log.i("list", "width=" + list1.getWidth() + ", height=" + list1.getHeight());
