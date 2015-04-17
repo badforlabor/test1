@@ -14,7 +14,16 @@ using System.Collections.Generic;
 
 namespace SHGame
 {
-    class SHUtil
+    public static class SHUtil
     {
+        public static GameObject GetGO(string name)
+        {
+            GameObject go = GameObject.Find(name);
+            if (go == null)
+            {
+                go = new GameObject(name);
+            }
+            return go;
+        }
     }
 }

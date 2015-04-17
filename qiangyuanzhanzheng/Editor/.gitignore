@@ -1,5 +1,8 @@
-/Library
-/obj
-/output
-/output_win32
-/Temp
+Library
+obj
+output
+output_win32
+Temp
+bin
+UnityVS.editor.sln.DotSettings
+UnityVS.editor.v12.suo

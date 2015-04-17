@@ -16,7 +16,7 @@ namespace SHGame
 {
     public class SHActionControllerBase : MonoBehaviour
     {
-        CharacterController cc = null;
+        public CharacterController cc = null;
 
         // Use this for initialization
         void Start()
@@ -45,6 +45,10 @@ namespace SHGame
 
         // Update is called once per frame
         void Update()
+        {
+
+        }
+        void Update1()
         {
 
             float delta = Time.deltaTime;
@@ -187,7 +191,10 @@ namespace SHGame
 
             }
 
-
+            UpdateCamera();
+        }
+        public void UpdateCamera()
+        {
             // 设置摄像机的位置
             Ray ray = new Ray(transform.position + Vector3.up * CameraYOffset, CameraDirection);
             Camera.main.transform.position = ray.GetPoint(CameraDistance);

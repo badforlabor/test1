@@ -15,8 +15,23 @@ using Pathfinding;
 
 namespace SHGame
 {
-    class SHMoveAgent : AIPath
+    class SHMoveAgent : AIPath, SHIActionAgent
     {
+        virtual public SHAgentType AgentType { get { return SHAgentType.SHAgent_MoveAgent; } }
+        public SHActionController Owner { get; private set; }
+        virtual public void Init(SHActionController ac)
+        {
+            Owner = ac;
+        }
+        virtual public bool IsActive()
+        {
+            return Owner.IsActive();
+        }
+        virtual public void PhyTick()
+        {
+
+        }
+
         override protected void Awake () 
         {
             base.Awake();
@@ -55,6 +70,22 @@ namespace SHGame
                 {
                     transform.Translate(dir * Time.deltaTime, Space.World);
                 }
+        }
+
+        // 转向某个方向
+        public bool TickRotateTowards(Vector3 direction)
+        {
+            float delta = Time.deltaTime;
+            if (Vector3.Angle(direction, Owner.ThisTransform.forward) < (Owner.QuaternionSpeed * delta))
+            {
+                Owner.ThisTransform.forward = direction;
+                return false;
+            }
+            else
+            {
+                Owner.ThisTransform.rotation = Quaternion.RotateTowards(Owner.ThisTransform.rotation, Quaternion.LookRotation(direction), delta * Owner.RotateSpeed);
+                return true;
+            }
         }
 
     }

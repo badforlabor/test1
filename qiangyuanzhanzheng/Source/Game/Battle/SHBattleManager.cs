@@ -15,6 +15,10 @@ using Pathfinding;
 
 namespace SHGame
 {
+    class BattleInfo : SHLevelSingleton<BattleInfo>
+    {
+        public int a = 1;
+    }
     class SHBattleManager : SHSingleton<SHBattleManager>
     {
         public void EnterGame()
@@ -25,6 +29,11 @@ namespace SHGame
         void OnEnterGame()
         {
             SHLogger.Debug("[Battle] 切换场景完毕，开始加载游戏信息！");
+
+            BattleInfo.Singleton.a = 2;
+
+            // 加载摄像机
+            Camera.main.gameObject.AddComponent<SHBattleCamera>();
 
             // 加载房间信息
             SHLogger.Info("[Battle] xxx load room.");
@@ -59,7 +68,7 @@ namespace SHGame
             AssembleMonsters();
 
             // 加载主角
-            AssemblePlayers();
+            AssemblePlayer();
 
             // 加载UI
             SHLogger.Info("[Battle] xxx load UI.");
@@ -68,11 +77,18 @@ namespace SHGame
         }
 
         // 主角
-        void AssemblePlayers()
+        void AssemblePlayer()
         {
             GameObject hero = SHResources.Singleton.Instance<GameObject>("Characters/hero_no1");
-            hero.AddComponent<SHActionControllerBase>();
             hero.name = "HERO";
+
+            SHActionController ac = hero.AddComponent<SHActionController>();
+            ac.Init(0, ECampType.ERed);
+            ac.InitInput();
+            ac.AddActionAgent<SHAIAgent>();
+            ac.AddActionAgent<SHMoveAgent>();
+
+            SHBattleCamera.Singleton.LookAt(hero);
         }
 
         // 怪
@@ -81,8 +97,13 @@ namespace SHGame
             GameObject go = new GameObject("MONSTERS");
 
             GameObject monster = SHResources.Singleton.Instance<GameObject>("Characters/hero_no1");
-            monster.AddComponent<SHMoveAgent>();
             monster.transform.parent = go.transform;
+            monster.layer = LayerMask.NameToLayer(SHNames.LayerMonster);
+
+            SHActionController ac = monster.AddComponent<SHActionController>();
+            ac.Init(0, ECampType.EBlue);
+            ac.AddActionAgent<SHAIAgent>();
+            ac.AddActionAgent<SHMoveAgent>();
         }
     }
 }

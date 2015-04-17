@@ -43,5 +43,10 @@ namespace SHGame
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
         }
+
+        virtual public void Update(float delta)
+        { 
+        
+        }
     }
 }

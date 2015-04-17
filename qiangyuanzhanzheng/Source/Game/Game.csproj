@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish_Android|AnyCPU'">
+    <OutputPath>bin\Publish_Android\</OutputPath>
+    <DefineConstants>UNITY_LESS_4_5;UNITY_4_3</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
@@ -40,9 +44,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle\SHActionController.cs" />
+    <Compile Include="Battle\SHAIAgent.cs" />
+    <Compile Include="Battle\SHBattleCamera.cs" />
     <Compile Include="Battle\SHMoveAgent.cs" />
+    <Compile Include="Battle\SHMover.cs" />
+    <Compile Include="Battle\SHMoverManager.cs" />
+    <Compile Include="Battle\SHThreatAgent.cs" />
+    <Compile Include="Core\SHTrashManager.cs" />
     <Compile Include="Core\SHGameManager.cs" />
     <Compile Include="Battle\SHBattleManager.cs" />
+    <Compile Include="Core\SHActorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\SHLoginBehaviour.cs" />
     <Compile Include="UI\SHQuitBattleBehaviour.cs" />

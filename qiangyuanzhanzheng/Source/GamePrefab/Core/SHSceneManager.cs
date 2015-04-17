@@ -26,9 +26,9 @@ namespace SHGame
         EScene mCurrentScene = EScene.None;
 
         AsyncOperation AsyncState = null;
-        CallBackVoid mCallback = null;
+        System.Action mCallback = null;
 
-        public void ChangeScene(EScene scene, CallBackVoid cb)
+        public void ChangeScene(EScene scene, System.Action cb)
         {
             if (scene == EScene.None)
             {
@@ -61,11 +61,11 @@ namespace SHGame
         {
             if (AsyncState != null && AsyncState.isDone)
             {
+                AsyncState = null;
                 SHLogger.Info("[virgin] load scene done. prescene=" + mOldScene + ", now=" + mCurrentScene);
                 SHResources.Singleton.OnSceneChanged();
-                SHDelegate.Exec(mCallback);
+                SHDelegate.Exec(ref mCallback);
 
-                AsyncState = null;
                 SHCoreEvents.Singleton.FireEvent(SHEventType.SCENE_Change_End, null);
             }
         }

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish_Android|AnyCPU'">
+    <OutputPath>bin\Publish_Android\</OutputPath>
+    <DefineConstants>UNITY_LESS_4_5;UNITY_4_3</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Pathfinding.ClipperLib">
       <HintPath>..\..\Editor\Assets\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
@@ -153,6 +157,7 @@
     <Compile Include="Astar\Utilities\PathUtilities.cs" />
     <Compile Include="Astar\Utilities\ProfileHelper.cs" />
     <Compile Include="Astar\Utilities\UnityReferenceHelper.cs" />
+    <Compile Include="Standards.cs" />
     <Compile Include="Core\SHDelegate.cs" />
     <Compile Include="Core\SHEvents.cs" />
     <Compile Include="Core\SHDispatcher.cs" />

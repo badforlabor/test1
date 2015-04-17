@@ -63,6 +63,7 @@ namespace SHGame
         {
             SHStats.Singleton.Update(delta);
             SHSceneManager.Singleton.Update(delta);
+            SHResources.Singleton.Update(delta);
         }
 
         virtual public void FixedUpdate(float delta)
