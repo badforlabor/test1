@@ -18,7 +18,7 @@ namespace SHGame
     {
         public SHMover SpawnOne(SHActionController owner)
         {
-            GameObject go = SHResources.Singleton.Instance<GameObject>("base/mover");
+            GameObject go = SHLevelPool.Singleton.Spawn("base/mover");
             go.layer = LayerMask.NameToLayer(SHNames.LayerMover);
             go.transform.parent = this.gameObject.transform;
             SHMover ret = go.AddComponent<SHMover>();

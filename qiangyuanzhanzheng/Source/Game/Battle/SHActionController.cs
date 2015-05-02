@@ -8,6 +8,7 @@ Copyright (c) 2013-2025,大连-游你酷伴.
  * purpose : 
 ****************************************************************************/
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,6 +60,8 @@ namespace SHGame
         // 阵营
         public ECampType Camp = ECampType.ENone;
 
+        UnityEngine.UI.Image MOVEAREA = null;
+
         public void OnInitActor()
         {
             ThisTransform = transform;
@@ -83,6 +86,7 @@ namespace SHGame
             OnInitActor();
 
             Camp = camp;
+            MOVEAREA = GameObject.Find("MOVEAREA").GetComponent<Image>();
         }
         public T AddActionAgent<T>() where T : MonoBehaviour
         {
@@ -111,9 +115,10 @@ namespace SHGame
             get { return agents[(int)SHAgentType.SHAgent_Threat] as SHThreatAgent; }
         }
 
-        public void TakeDamage(SHIActor killer)
+        public void TakeDamage(SHActionController killer)
         { 
-        
+            // 死亡
+            AIAgent.SetNextState(EState.AI_DEAD);
         }
 
         void FixedUpdate()
@@ -136,9 +141,47 @@ namespace SHGame
         // 主角初始化按键
         public void InitInput()
         {
+#if false
             SHInputClick.SpawnOne(gameObject, OnInputClick);
             SHInputMove.SpawnOne(gameObject, OnInputMove);
+#else
+            SHCuteInput ci = this.gameObject.AddComponent<SHCuteInput>();
+            ci.OnFire = OnInputFire;
+            ci.OnLockMoveArea = OnInputLockMoveArea;
+            ci.OnMoveOnMoveArea = OnInputMOveOnMoveArea;
+#endif
         }
+        void OnInputFire(SHCuteInput obj)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(obj.PressedScreenPos);
+            RaycastHit hitresult;
+            if (Physics.Raycast(ray, out hitresult))
+            {
+                //SHStats.Singleton.AddMsg("FIRE:" + hitresult.point + ", screen=" + obj.PressedScreenPos);
+                AIAgent.AimToFire(hitresult.point);
+            }
+        }
+        void OnInputLockMoveArea(SHCuteInput obj)
+        {
+            //SHStats.Singleton.AddMsg("LOCK INPUT:" + obj.MoveAreaID, Color.red);
+            // 更新UI位置
+            if (obj.MoveAreaID == SHCuteInput.AREA_RIGHT)
+            {
+                MOVEAREA.rectTransform.anchorMin = new Vector2(0.5f, 0);
+                MOVEAREA.rectTransform.anchorMax = new Vector2(1, 1);
+            }
+            else
+            {
+                MOVEAREA.rectTransform.anchorMin = new Vector2(0f, 0);
+                MOVEAREA.rectTransform.anchorMax = new Vector2(0.5f, 1);
+            }
+        }
+        void OnInputMOveOnMoveArea(SHCuteInput obj)
+        {
+            //SHStats.Singleton.AddMsg("MOVE:" + obj.ExpectDir, Color.yellow);
+            AIAgent.ProcessMove(obj.ExpectDir);
+        }
+
         void OnInputClick(SHInputClick cb)
         { 
             // 获取指向目标
@@ -192,10 +235,6 @@ namespace SHGame
             // 行走思路改成第3种
             cc.Move(cb.ExpectDir * delta * RunSpeed);
 
-            // 设置摄像机的位置
-            Ray ray = new Ray(transform.position + Vector3.up * CameraYOffset, CameraDirection);
-            Camera.main.transform.position = ray.GetPoint(CameraDistance);
-            Camera.main.transform.rotation = Quaternion.Euler(CameraRotation);
         }
     }
 }

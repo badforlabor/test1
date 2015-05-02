@@ -30,19 +30,26 @@ namespace SHGame
         {
             SHLogger.Debug("[Battle] 切换场景完毕，开始加载游戏信息！");
 
+            SHLevelPool.Singleton.Test();
+
+
             BattleInfo.Singleton.a = 2;
 
             // 加载摄像机
             Camera.main.gameObject.AddComponent<SHBattleCamera>();
 
+            // 简单的roominfo，地形+寻路网格
+            //string[] roominfo = { "Rooms/huianchengzhen02", "Rooms/NavMesh/huianchengzhen02" };
+            string[] roominfo = { "Rooms/guangchang", "Rooms/NavMesh/guangchang" };
+
             // 加载房间信息
             SHLogger.Info("[Battle] xxx load room.");
-            SHResources.Singleton.Instance<UnityEngine.Object>("Rooms/huianchengzhen02");
+            SHResources.Singleton.Instance<UnityEngine.Object>(roominfo[0]);
 
             // 加载寻路网格
             // 用了第三方库，提供的接口很简单：
             //      用RecastNavMesh生成一个obj文件，然后运行时加载mesh，并将其赋值给NavMeshGraph，然后执行一下Scan即可。
-            Mesh mesh = SHResources.Singleton.Load<Mesh>("Rooms/NavMesh/huianchengzhen02");
+            Mesh mesh = SHResources.Singleton.Load<Mesh>(roominfo[1]);
             if (mesh == null)
             {
                 SHLogger.Warning("[Battle] can't find nav mesh!");
@@ -88,13 +95,18 @@ namespace SHGame
             ac.AddActionAgent<SHAIAgent>();
             ac.AddActionAgent<SHMoveAgent>();
 
+            SHBattleInfo.Singleton.HERO = ac;
             SHBattleCamera.Singleton.LookAt(hero);
         }
 
         // 怪
         void AssembleMonsters()
         {
-            GameObject go = new GameObject("MONSTERS");
+            AssembleOneMonster();
+        }
+        public SHActionController AssembleOneMonster()
+        {
+            GameObject go = SHUtil.GetGO("MONSTERS");
 
             GameObject monster = SHResources.Singleton.Instance<GameObject>("Characters/hero_no1");
             monster.transform.parent = go.transform;
@@ -104,6 +116,8 @@ namespace SHGame
             ac.Init(0, ECampType.EBlue);
             ac.AddActionAgent<SHAIAgent>();
             ac.AddActionAgent<SHMoveAgent>();
+
+            return ac;
         }
     }
 }

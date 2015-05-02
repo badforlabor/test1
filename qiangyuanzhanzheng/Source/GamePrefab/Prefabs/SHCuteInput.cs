@@ -14,11 +14,11 @@ using System.Collections.Generic;
 
 namespace SHGame
 {
-    class SHCuteInput : MonoBehaviour
+    public class SHCuteInput : MonoBehaviour
     {
-        const int AREA_LEFT = 0;
-        const int AREA_RIGHT = 1;
-        const int INVALID_FINGER = -1;
+        public const int AREA_LEFT = 0;
+        public const int AREA_RIGHT = 1;
+        public const int INVALID_FINGER = -1;
 
 
         Vector2 OldMousePos = Vector2.zero;
@@ -27,10 +27,15 @@ namespace SHGame
         // IOS最多支持5个手指
         float[] TouchTime = { 0, 0, 0, 0, 0 };
 
+        Vector2 LastPos = Vector2.zero;
         public Vector3 ExpectDir = Vector3.zero;
 
         public float PressedTime = 0;
         public Vector2 PressedScreenPos = Vector2.zero;
+
+        public int MoveAreaID = AREA_LEFT; // 默认是左区域，1是右区域
+        public bool bLockMove = false;
+        public int LockMoveFingerID = INVALID_FINGER;
 
         public System.Action<SHCuteInput> OnLockMoveArea = null;
         public System.Action<SHCuteInput> OnMoveOnMoveArea = null;
@@ -60,12 +65,13 @@ namespace SHGame
                 }
                 else if (Input.touchCount > 0)
                 {
-                    int firstHold = 0;
-                    bool bLockMove = false;
-                    int LockMoveFingerID = INVALID_FINGER;
-                    int MoveAreaID = AREA_LEFT; // 默认是左区域，1是右区域
                     foreach (var t in Input.touches)
                     {
+
+                        //SHStats.Singleton.AddMsg("               finger, id=" + t.fingerId + ", phase=" + t.phase
+                        //        + ", lock=" + bLockMove + ", area=" + LockMoveFingerID);
+                
+
                         if (t.phase == TouchPhase.Began)
                         { 
                             // 认为是按下，为攻击区域做准备，准备计算是不是click动作
@@ -95,8 +101,9 @@ namespace SHGame
                         {
                             if (LockMoveFingerID == t.fingerId)
                             {
+                                //LastPos = t.position;
                                 // 视为移动区域的hold
-                                SHDelegate.Exec(OnLockMoveArea, this);
+                                SHDelegate.Exec(OnMoveOnMoveArea, this);
                             }
                             else
                             {
@@ -113,13 +120,18 @@ namespace SHGame
                             {
                                 bLockMove = true;
                                 LockMoveFingerID = t.fingerId;
+                                LastPos = t.position;
                                 MoveAreaID = GetClickArea(t.position);
+                                SHDelegate.Exec(OnLockMoveArea, this);
                             }
                             else
                             {
                                 // 如果是在移动区域移动，那么通知玩家移动位置
-                                if (GetClickArea(t.position) == MoveAreaID)
+                                if (bLockMove && GetClickArea(t.position) == MoveAreaID)
                                 {
+                                    Vector2 v = t.position - LastPos;
+                                    ExpectDir = new Vector3(v.x, 0, v.y);
+                                    ExpectDir.Normalize();
                                     SHDelegate.Exec(OnMoveOnMoveArea, this);
                                 }
                                 else

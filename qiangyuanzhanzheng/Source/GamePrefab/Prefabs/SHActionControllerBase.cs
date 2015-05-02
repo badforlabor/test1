@@ -196,12 +196,10 @@ namespace SHGame
         public void UpdateCamera()
         {
             // 设置摄像机的位置
-            Ray ray = new Ray(transform.position + Vector3.up * CameraYOffset, CameraDirection);
-            Camera.main.transform.position = ray.GetPoint(CameraDistance);
-            Camera.main.transform.rotation = Quaternion.Euler(CameraRotation);
         }
         void OnGUI()
         {
+            return;
             Rect area = new Rect(10, 10, Screen.width, 20);
             GUI.Label(area, "SH-horizontal:" + Input.GetAxis("Horizontal"));
 

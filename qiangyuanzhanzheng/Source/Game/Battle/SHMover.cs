@@ -43,6 +43,8 @@ namespace SHGame
         {
             OnInitActor();
 
+            PendingDestroyed = false;
+
             Owner = owner;
         }
 
@@ -153,6 +155,7 @@ namespace SHGame
 
             if (IsActive())
             {
+                ac.TakeDamage(Owner);
                 DestroyMe();
             }
         }

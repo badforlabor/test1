@@ -16,6 +16,8 @@ namespace SHGame
 {
     class SHTrashManager : SHLevelSingleton<SHTrashManager>
     {
+        public static readonly Vector3 TrashPostion = new Vector3(-1313, 0, 0);
+
         void Awake()
         {
             transform.localPosition = new Vector3(-1313, 0, 0);
@@ -23,6 +25,12 @@ namespace SHGame
 
         public void Trash(SHIActor actor)
         {
+            // 被缓冲池回收了，那么就放弃掉啦
+            if (SHLevelPool.Singleton.TrashOne(actor.ThisTransform.gameObject))
+            {
+                return;
+            }
+
             // 保持相对位置不变
             Vector3 pos = actor.ThisTransform.localPosition;
             actor.ThisTransform.parent = gameObject.transform;

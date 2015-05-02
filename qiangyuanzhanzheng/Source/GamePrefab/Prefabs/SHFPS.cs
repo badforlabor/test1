@@ -17,13 +17,21 @@ namespace SHGame
     public class SHFPS : MonoBehaviour
     {
         int fps = 0;
-        float Interval = 1;
+        const float Interval = 1;
 
         int frame = 0;
         float time = 0;
 
         void Start()
         {
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                Application.targetFrameRate = 30;
+            }
+            else
+            {
+                Application.targetFrameRate = 100;
+            }
             Application.targetFrameRate = 100;
             QualitySettings.vSyncCount = 0;
         }
@@ -60,6 +68,10 @@ namespace SHGame
             area.yMin += 20;
             area.yMax += 20;
             GUI.Label(area, "limit:" + Application.targetFrameRate);
+
+            area.yMin += 20;
+            area.yMax += 20;
+            GUI.Label(area, "version 3");
         }
     }
 }
