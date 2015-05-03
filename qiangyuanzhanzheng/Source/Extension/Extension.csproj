@@ -166,6 +166,7 @@
     <Compile Include="Astar\Utilities\PathUtilities.cs" />
     <Compile Include="Astar\Utilities\ProfileHelper.cs" />
     <Compile Include="Astar\Utilities\UnityReferenceHelper.cs" />
+    <Compile Include="Core\SHList.cs" />
     <Compile Include="json_src\JsonFormatter.cs" />
     <Compile Include="json_src\JsonHelper.cs" />
     <Compile Include="json_src\LitJson\IJsonWrapper.cs" />

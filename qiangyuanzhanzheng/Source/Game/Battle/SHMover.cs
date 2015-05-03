@@ -28,14 +28,16 @@ namespace SHGame
         }
 
 
-
+        // 提供给prefab的，可配变量
         //public Vector3 Velocity = Vector3.zero;    // 速度方向，这个废掉，就是Gameobject的朝向！
-        public float LifeTime = 5;                 // 生命周期
+        public float _LifeTime = 5;                 // 生命周期
         public float VerticalSpeed = 0;            // 垂直方向的速度
         public float HorizentalSpeed = 200;          // 水平方向的速度
         public bool UseGravity = false;             // 是否使用重力（影响垂直方向）
 
+        // 提供给运行时的，可变变量，内存池对象需要初始化
         bool PendingDestroyed = false;
+        float LifeTime = 5;
 
         public SHActionController Owner = null;
 
@@ -44,6 +46,7 @@ namespace SHGame
             OnInitActor();
 
             PendingDestroyed = false;
+            LifeTime = 5;
 
             Owner = owner;
         }

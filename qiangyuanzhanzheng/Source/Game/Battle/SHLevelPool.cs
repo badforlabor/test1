@@ -15,40 +15,88 @@ using System.Collections.Generic;
 namespace SHGame
 {
     // 凡是有这个标志的，都将加入到缓冲池中。
-    class SHPoolTag : MonoBehaviour
+    public class SHPoolTag : MonoBehaviour
     {
         public string Path = "";
         public int SortID = 0;
     }
     class SHLevelPool : SHLevelSingleton<SHLevelPool>
     {
-        public List<SHPoolTag> Storage = new List<SHPoolTag>();
+        static int CompareFunc(SHPoolTag left, SHPoolTag right)
+        {
+            return CompareFuncImpl(left.SortID, right);
+        }
+        static int CompareFuncImpl(int leftSortID, SHPoolTag right)
+        {
+                if (leftSortID < right.SortID)
+                    return -1;
+                else if (leftSortID > right.SortID)
+                    return 1;
+                else
+                    return 0;
+        }
+        static int CompareFunc2(SHPoolTag left, SHPoolTag right)
+        {
+            return CompareFuncImpl2(left.Path, right);
+        }
+        static int CompareFuncImpl2(string leftPath, SHPoolTag right)
+        {
+            return string.Compare(leftPath, right.Path);
+        }
 
+
+        public SHList<SHPoolTag> Storage = new SHList<SHPoolTag>(CompareFunc);
+        public SHList<SHPoolTag> TemplateStorage = new SHList<SHPoolTag>(CompareFunc2);
+        
         public void Test()
         {
+#if false
             GameObject go = Spawn("base/mover");
             GameObject.Destroy(go);
             go = Spawn("base/mover");
             SHLevelPool.Singleton.TrashOne(go);
             go = Spawn("base/mover");
             SHLevelPool.Singleton.TrashOne(go);
+#endif
         }
         public GameObject Spawn(string fullpath)
+        {
+            return Spawn(fullpath, null);
+        }
+        public GameObject Spawn(string fullpath, System.Action<GameObject> TemplateCallback)
         {
             SHPoolTag ret = GetInStorage(fullpath);
             if (ret == null)
             {
-                GameObject goTemplate = SHResources.Singleton.Load<GameObject>(fullpath);
-                SHPoolTag pooltag = goTemplate.GetComponent<SHPoolTag>();
-                if (pooltag == null)
+                SHPoolTag tagTemplate = TemplateStorage.Find(delegate(SHPoolTag tag)
                 {
-                    pooltag = goTemplate.AddComponent<SHPoolTag>();
-                    pooltag.Path = fullpath;
-                    pooltag.SortID = fullpath.GetHashCode();
-                }
+                    return CompareFuncImpl2(fullpath, tag);
+                });
+                if (tagTemplate == null)
+                {
+                    SHLogger.Debug("[pool] xxxx new template:" + fullpath);
+                    GameObject go = SHResources.Singleton.Instance<GameObject>(fullpath);
+                    go.SetActive(false);
 
-                GameObject go = (GameObject)GameObject.Instantiate(goTemplate);
-                ret = go.GetComponent<SHPoolTag>();
+                    SHPoolTag pooltag = go.GetComponent<SHPoolTag>();
+                    if (pooltag == null)
+                    {
+                        pooltag = go.AddComponent<SHPoolTag>();
+                        pooltag.Path = fullpath;
+                        pooltag.SortID = fullpath.GetHashCode();
+                    }
+                    // 修改模板的
+                    if (TemplateCallback != null)
+                    {
+                        TemplateCallback(go);
+                    }
+                    tagTemplate = pooltag;
+
+                    TemplateStorage.Add(tagTemplate);
+                }
+                GameObject goRet = (GameObject)GameObject.Instantiate(tagTemplate.gameObject);
+                goRet.SetActive(true);
+                ret = goRet.GetComponent<SHPoolTag>();
             }
             else
             {
@@ -74,32 +122,20 @@ namespace SHGame
             pooltag.transform.localPosition = SHTrashManager.TrashPostion;
 
             Storage.Add(pooltag);
-            SortStorage();
-        }
-        void SortStorage()
-        {
-            // 数据更改的时候，立刻排序，这样查找的时候，能够快一点（起始dictionary就是这个过程）
-            Storage.Sort(delegate(SHPoolTag left, SHPoolTag right)
-            {
-                if (left.SortID < right.SortID)
-                    return -1;
-                else if (left.SortID > right.SortID)
-                    return 1;
-                else
-                    return 0;
-            });
         }
         void RemoveFromStorage(SHPoolTag pooltag)
         {
             pooltag.transform.parent = null;
             Storage.Remove(pooltag);
-            SortStorage();
         }
         SHPoolTag GetInStorage(string path)
         {
             int sortID = path.GetHashCode();
             // 改用2分查找，这样能快点
-            return Storage.Find(x => x.SortID == sortID);
+            return Storage.Find(delegate(SHPoolTag tag)
+            {
+                return CompareFuncImpl(sortID, tag);
+            });
         }
     }
 }

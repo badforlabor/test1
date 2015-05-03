@@ -23,4 +23,15 @@ namespace SHGame
             SHLogger.Debug("XXXXXXXXXXXXXXXXXXXXX");
         }
     }
+    [CustomEditor(typeof(SHList<MonoBehaviour>))]
+    class SHListEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.LabelField("123123123");
+            EditorGUILayout.EndVertical();
+        }
+    }
+
 }

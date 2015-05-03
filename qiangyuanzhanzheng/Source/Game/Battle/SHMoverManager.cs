@@ -18,11 +18,21 @@ namespace SHGame
     {
         public SHMover SpawnOne(SHActionController owner)
         {
-            GameObject go = SHLevelPool.Singleton.Spawn("base/mover");
-            go.layer = LayerMask.NameToLayer(SHNames.LayerMover);
-            go.transform.parent = this.gameObject.transform;
-            SHMover ret = go.AddComponent<SHMover>();
+            GameObject go = SHLevelPool.Singleton.Spawn("base/mover", delegate(GameObject goTemplate)
+            {
+                if (goTemplate.GetComponent<SHMover>() == null)
+                {
+                    goTemplate.layer = LayerMask.NameToLayer(SHNames.LayerMover);
+                    goTemplate.AddComponent<SHMover>();
 
+                    // 生成特效
+                    GameObject goEffect = new GameObject("goEffect");
+                    goEffect.transform.parent = goTemplate.transform;
+                }
+            });
+            go.transform.parent = this.gameObject.transform;
+            SHMover ret = go.GetComponent<SHMover>();
+            
             // 异步生成特效！
 
             ret.Init(owner, 0);
