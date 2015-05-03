@@ -73,6 +73,13 @@ namespace keyword_ref_out
             c1.Show();
             c2.Show();
 
+            Zero(ref c1);
+            ASSERT(c1 == null);
+
+        }
+        static void Zero<T>(ref T a) where T : class
+        {
+            a = null;    
         }
 
 

@@ -239,6 +239,7 @@ namespace keyword_operator
             float r21 = 2 * q.X * q.Y + 2 * q.Z * q.W;
             float r22 = q.W * q.W - q.X * q.X + q.Y * q.Y - q.Z * q.Z;
             //float r23 = 
+            return Vector.Zero;
         }
         
 
