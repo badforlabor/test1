@@ -41,13 +41,15 @@ namespace api_assert
             AssertManager.Assert2(false);
         }
 
+
         static void Main(string[] args)
         {
+
             //Debug.Fail("wo cao!");
 
             //Debug.Assert(false, "wo cao!");
 
-            test1();
+            //test1();
 
             Console.WriteLine("The End");
         }
