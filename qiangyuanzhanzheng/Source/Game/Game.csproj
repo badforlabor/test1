@@ -33,16 +33,43 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish_Android|AnyCPU'">
+    <OutputPath>bin\Publish_Android\</OutputPath>
+    <DefineConstants>UNITY_LESS_4_5;UNITY_4_3</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PublishAndroid|AnyCPU'">
+    <OutputPath>bin\PublishAndroid\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android|AnyCPU'">
+    <OutputPath>bin\Android\</OutputPath>
+    <DefineConstants>UNITY_LESS_4_5;UNITY_4_3</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>D:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Unity46\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\Program Files\Unity46\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.3\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle\SHActionController.cs" />
+    <Compile Include="Battle\SHAIAgent.cs" />
+    <Compile Include="Battle\SHAIStates.cs" />
+    <Compile Include="Battle\SHBattleCamera.cs" />
+    <Compile Include="Battle\SHBattleInfo.cs" />
+    <Compile Include="Battle\SHLevelPool.cs" />
     <Compile Include="Battle\SHMoveAgent.cs" />
+    <Compile Include="Battle\SHMover.cs" />
+    <Compile Include="Battle\SHMoverManager.cs" />
+    <Compile Include="Battle\SHThreatAgent.cs" />
+    <Compile Include="Battle\Trigger\SHMonsterGenerator.cs" />
+    <Compile Include="Core\SHTrashManager.cs" />
     <Compile Include="Core\SHGameManager.cs" />
     <Compile Include="Battle\SHBattleManager.cs" />
+    <Compile Include="Core\SHActorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\SHLoginBehaviour.cs" />
     <Compile Include="UI\SHQuitBattleBehaviour.cs" />

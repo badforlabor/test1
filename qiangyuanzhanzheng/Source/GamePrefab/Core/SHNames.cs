@@ -16,6 +16,13 @@ namespace SHGame
 {
     public class SHNames
     {
+        // Tag
         public static string PersistantTag = "PERSISTENT_TAG";
+
+        // Layer
+        public static string LayerMover = "MOVER";
+        public static string LayerMonster = "MONSTER";
+
+
     }
 }

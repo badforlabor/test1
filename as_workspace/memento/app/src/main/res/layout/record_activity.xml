@@ -36,14 +36,6 @@
         android:layout_y="78dp"
         android:text="stop" />
 
-    <Button
-        android:id="@+id/rec_testbtn"
-        android:layout_width="185dp"
-        android:layout_height="wrap_content"
-        android:layout_x="103dp"
-        android:layout_y="471dp"
-        android:text="测试按钮事件" />
-
     <TextView
         android:layout_width="255dp"
         android:layout_height="wrap_content"
@@ -52,5 +44,22 @@
         android:id="@+id/rec_label_tip"
         android:layout_x="69dp"
         android:layout_y="221dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="441dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/rec_testbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="93dp"
+            android:layout_y="477dp"
+            android:text="    测试按钮事件    " />
+    </LinearLayout>
 
 </AbsoluteLayout>

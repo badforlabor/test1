@@ -16,11 +16,9 @@ namespace SHGame
 {
     public class SHGameManagerBase : SHSingleton<SHGameManagerBase>
     {
-        public RuntimePlatform Platform = RuntimePlatform.WindowsEditor;
-
         public bool IsPlayInMobile()
         {
-            return (!Application.isEditor && (Platform == RuntimePlatform.Android || Platform == RuntimePlatform.IPhonePlayer));
+            return (!Application.isEditor && (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer));
         }
         
         // 把逻辑代码转到Game工程中。
@@ -63,6 +61,7 @@ namespace SHGame
         {
             SHStats.Singleton.Update(delta);
             SHSceneManager.Singleton.Update(delta);
+            SHResources.Singleton.Update(delta);
         }
 
         virtual public void FixedUpdate(float delta)

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "keyword_delegate", "keyword_delegate\keyword_delegate.csproj", "{936B0E05-53C0-4635-936D-F0099ACF9CA8}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_serialize", "api_serialize\api_serialize.csproj", "{374B75F8-CB1A-463C-8A19-04F42DA9E73E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_compress", "api_compress\api_compress.csproj", "{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "keyword_interface", "api_interface\keyword_interface.csproj", "{ACBAD9C5-6B66-442E-B5A8-559B4D749EEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_collections", "api_collections\api_collections.csproj", "{6CEC3EED-5426-4DCD-81B6-6CA4404F07CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine", "StateMachine\StateMachine.csproj", "{0AA7E8B0-7301-4210-AD5B-F4E0256A95E2}"
 EndProject
@@ -71,10 +75,14 @@ Global
 		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B428C6E-3FCD-49CE-8707-C179FA0DCE6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AA7E8B0-7301-4210-AD5B-F4E0256A95E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AA7E8B0-7301-4210-AD5B-F4E0256A95E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AA7E8B0-7301-4210-AD5B-F4E0256A95E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AA7E8B0-7301-4210-AD5B-F4E0256A95E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBAD9C5-6B66-442E-B5A8-559B4D749EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBAD9C5-6B66-442E-B5A8-559B4D749EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBAD9C5-6B66-442E-B5A8-559B4D749EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBAD9C5-6B66-442E-B5A8-559B4D749EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CEC3EED-5426-4DCD-81B6-6CA4404F07CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CEC3EED-5426-4DCD-81B6-6CA4404F07CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CEC3EED-5426-4DCD-81B6-6CA4404F07CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CEC3EED-5426-4DCD-81B6-6CA4404F07CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

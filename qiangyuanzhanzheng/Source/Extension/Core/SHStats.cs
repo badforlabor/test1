@@ -113,6 +113,10 @@ namespace SHGame
         protected float BeginTime;
         public SHLitTimer()
         {
+            Reset();
+        }
+        public void Reset()
+        {
             BeginTime = Time.realtimeSinceStartup;
         }
         public bool IsTime(float delta)

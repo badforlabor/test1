@@ -4,37 +4,54 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="时间"
         android:id="@+id/list_rec_co_time"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/actionbar_icon"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="播放"
-            android:id="@+id/list_rec_co_btn_play" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/actionbar_icon"
+                android:layout_gravity="bottom" />
+        </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="大声播放"
-            android:id="@+id/list_rec_co_btn_playloud"
-            android:layout_gravity="center_horizontal" />
+            android:gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放"
+                android:id="@+id/list_rec_co_btn_play" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="大声播放"
+                android:id="@+id/list_rec_co_btn_playloud"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

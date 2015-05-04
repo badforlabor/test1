@@ -862,7 +862,7 @@ GameObject:
   - 95: {fileID: 9500090}
   - 114: {fileID: 11400024}
   - 64: {fileID: 6400000}
-  m_Layer: 30
+  m_Layer: 0
   m_Name: hacz02_dixing
   m_TagString: Untagged
   m_Icon: {fileID: 0}

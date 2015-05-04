@@ -18,7 +18,7 @@ namespace SHGame
     {
         void OnGUI()
         {
-            if (GUI.Button(new Rect(10, 10, 100, 30), "退出游戏"))
+            if (GUI.Button(new Rect(Screen.width - 10 - 100, Screen.height - 30 - 10, 100, 30), "退出游戏"))
             {
                 SHLogger.Debug("退出游戏！");
                 SHGameManager.Singleton.QuitBattle();

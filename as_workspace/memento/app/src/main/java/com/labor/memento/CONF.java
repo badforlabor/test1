@@ -26,4 +26,7 @@ public class CONF {
 
     // 分类
     public final static String[] CATEGORY_RECORD = {"test", "工作", "家庭"};
+
+    // 日志分类
+    public final static String API_TEST = "api-test";
 }

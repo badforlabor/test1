@@ -31,6 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish_Android|AnyCPU'">
+    <OutputPath>bin\Publish_Android\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PublishAndroid|AnyCPU'">
+    <OutputPath>bin\PublishAndroid\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android|AnyCPU'">
+    <OutputPath>bin\Android\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Pathfinding.ClipperLib">
       <HintPath>..\..\Editor\Assets\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
@@ -46,10 +55,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEditor">
-      <HintPath>D:\Program Files\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
+      <HintPath>D:\Program Files\Unity46\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>D:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>D:\Program Files\Unity46\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

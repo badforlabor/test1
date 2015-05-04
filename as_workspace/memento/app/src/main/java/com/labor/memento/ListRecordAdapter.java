@@ -28,7 +28,7 @@ public class ListRecordAdapter extends BaseAdapter {
             @Override
             public int compare(RecordInfo lhs, RecordInfo rhs) {
                 // id由大到小
-                return lhs.id > rhs.id ? 1 : 0;
+                return -1 * (lhs.id > rhs.id ? 1 : (lhs.id < rhs.id ? -1 : 0));
             }
         });
 	}
@@ -55,38 +55,42 @@ public class ListRecordAdapter extends BaseAdapter {
 			try
 			{
 				view = LayoutInflater.from(context).inflate(R.layout.liaotian, parent, false);
-                RecordInfo ri = list.get(arg0);
-                TextView t1 = (TextView)view.findViewById(R.id.name);
-				t1.setText("tag-" + ri.tag);
-                t1 = (TextView)view.findViewById(R.id.lastmsg);
-                t1.setText("name=" + ri.fileName);
-                t1 = (TextView)view.findViewById(R.id.time);
-                t1.setText("" + DateFormat.getDateInstance().format(new Date(ri.date)));
-
-
-
-                view.setTag(ri.id);
-                view.setClickable(true);
-				view.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						Log.i("list", "click list!");
-
-                        Intent intent = new Intent(arg0.getRootView().getContext(),
-                                RecordContentActivity.class);
-                        intent.putExtra("tag", ((long)arg0.getTag()));
-                        arg0.getRootView().getContext().startActivity(intent);
-					}
-				});	
 			}
 			catch(Exception e)
 			{
 				Log.i("list", "exception=" + e.getMessage());
 			}
 		}
-		
+        try
+        {
+            RecordInfo ri = list.get(arg0);
+            TextView t1 = (TextView)view.findViewById(R.id.name);
+            t1.setText("tag-" + ri.tag);
+            t1 = (TextView)view.findViewById(R.id.lastmsg);
+            t1.setText("name=" + ri.fileName);
+            t1 = (TextView)view.findViewById(R.id.time);
+            t1.setText("" + DateFormat.getDateInstance().format(new Date(ri.date)));
+
+            view.setTag(ri.id);
+            view.setClickable(true);
+            view.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    // TODO Auto-generated method stub
+                    Log.i("list", "click list!");
+
+                    Intent intent = new Intent(arg0.getRootView().getContext(),
+                            RecordContentActivity.class);
+                    intent.putExtra("tag", ((long)arg0.getTag()));
+                    arg0.getRootView().getContext().startActivity(intent);
+                }
+            });
+        }
+        catch(Exception e)
+        {
+            Log.i("list", "exception=" + e.getMessage());
+        }
 		
 		return view;
 	}

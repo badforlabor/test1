@@ -392,6 +392,7 @@ namespace keyword_operator
                 ret.Z = RadiusToDegree(Atan2(r21, r11));
             }
             return ret;
+            return Vector.Zero;
         }
         
         // 实现unity的Quaternion

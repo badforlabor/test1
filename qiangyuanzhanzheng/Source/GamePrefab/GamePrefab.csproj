@@ -34,10 +34,20 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish_Android|AnyCPU'">
+    <OutputPath>bin\Publish_Android\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PublishAndroid|AnyCPU'">
+    <OutputPath>bin\PublishAndroid\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android|AnyCPU'">
+    <OutputPath>bin\Android\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>D:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Unity46\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -45,7 +55,10 @@
     <Compile Include="Core\SHNames.cs" />
     <Compile Include="Core\SHSceneManager.cs" />
     <Compile Include="Prefabs\SHActionControllerBase.cs" />
+    <Compile Include="Prefabs\SHCuteInput.cs" />
     <Compile Include="Prefabs\SHFPS.cs" />
+    <Compile Include="Prefabs\SHInputClick.cs" />
+    <Compile Include="Prefabs\SHInputMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

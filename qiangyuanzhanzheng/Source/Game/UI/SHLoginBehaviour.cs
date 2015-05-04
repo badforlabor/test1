@@ -16,12 +16,14 @@ namespace SHGame
 {
     class SHLoginBehaviour : MonoBehaviour
     {
+        bool Done = false;
         void OnGUI()
         {
-            if (GUI.Button(new Rect(10, 10, 100, 30), "进入游戏"))
+            if (!Done && GUI.Button(new Rect(50, 50, 240, 100), "进入游戏"))
             {
                 SHLogger.Debug("进入游戏！");
                 SHBattleManager.Singleton.EnterGame();
+                Done = true;
             }
         }
     }

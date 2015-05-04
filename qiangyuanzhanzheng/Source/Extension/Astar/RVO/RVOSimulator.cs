@@ -33,38 +33,38 @@ namespace Pathfinding.RVO {
 		 * 
 		 * This will only be read at Awake.
 		 * \see Pathfinding.RVO.Simulator.DoubleBuffering */
-		[Tooltip("Calculate local avoidance in between frames")]
+		[TooltipAttribute("Calculate local avoidance in between frames")]
 		public bool doubleBuffering = true;
 		
 		/** Interpolate positions between simulation timesteps.
 		  * If you are using agents directly, make sure you read from the InterpolatedPosition property. */
-		[Tooltip("Interpolate positions between simulation timesteps")]
+        [TooltipAttribute("Interpolate positions between simulation timesteps")]
 		public bool interpolation = true;
 		
 		/** Desired FPS for rvo simulation.
 		  * It is usually not necessary to run a crowd simulation at a very high fps.
 		  * Usually 10-30 fps is enough, but can be increased for better quality.
 		  * The rvo simulation will never run at a higher fps than the game */
-		[Tooltip("Desired FPS for rvo simulation. It is usually not necessary to run a crowd simulation at a very high fps.\n" +
+        [TooltipAttribute("Desired FPS for rvo simulation. It is usually not necessary to run a crowd simulation at a very high fps.\n" +
 		         "Usually 10-30 fps is enough, but can be increased for better quality.\n"+
 		         "The rvo simulation will never run at a higher fps than the game")]
 		public int desiredSimulatonFPS = 20;
 		
 		/** Number of RVO worker threads.
 		 * If set to None, no multithreading will be used. */
-		[Tooltip("Number of RVO worker threads. If set to None, no multithreading will be used.")]
+        [TooltipAttribute("Number of RVO worker threads. If set to None, no multithreading will be used.")]
 		public ThreadCount workerThreads = ThreadCount.Two;
 
 		/** A higher value will result in lower quality local avoidance but faster calculations.
 		 * Valid range is [0...1]
 		 */
-		[Tooltip("A higher value will result in lower quality local avoidance but faster calculations. [0...1]")]
+        [TooltipAttribute("A higher value will result in lower quality local avoidance but faster calculations. [0...1]")]
 		public float qualityCutoff = 0.05f;
 
 		public float stepScale = 1.5f;
 
 		/** Higher values will raise the penalty for agent-agent intersection */
-		[Tooltip("Higher values will raise the penalty for agent-agent intersection")]
+        [TooltipAttribute("Higher values will raise the penalty for agent-agent intersection")]
 		public float incompressibility = 30;
 
 		public float desiredVelocityWeight = 0.1f;

@@ -4,8 +4,10 @@ import java.io.File;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -57,6 +59,16 @@ public class MainActivity extends ActionBarActivity {
         Utils.FileUtil.MakeDir(CONF.LOCAL_ROOT_MEMENTO_AUDIO_DIR);
 
         Utils.Init();
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(new MyBroadcast(null), filter);
+
+
+        Intent go = new Intent(this, GFWActivity.class);
+        this.startActivity(go);
     }
 
     public static class FileUtil {
@@ -190,5 +202,71 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(CONF.API_TEST, "onResume");
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(CONF.API_TEST, "onRestart");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(CONF.API_TEST, "onStart"+ IsLocked());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(CONF.API_TEST, "onStop"+ IsLocked());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(CONF.API_TEST, "onDestroy"+ IsLocked());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(CONF.API_TEST, "onPause"+ IsLocked() + ", context=" + this.toString());
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Log.i(CONF.API_TEST, "onLowMemory" + IsLocked());
+    }
+    public String IsLocked(){
+        KeyguardManager km = (KeyguardManager)this.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+        if(km != null && km.inKeyguardRestrictedInputMode()){
+//            return "lock!";
+        }
+//        return "unlock!";
+        return curAction;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        Log.i(CONF.API_TEST, "onActivityResult");
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        Log.i(CONF.API_TEST, "onUserLeaveHint");
+    }
+
+    String curAction = "";
+    public void SetAction(String ac){
+        curAction = ac;
+    }
+
+
 }

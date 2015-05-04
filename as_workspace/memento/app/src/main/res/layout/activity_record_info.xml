@@ -24,14 +24,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认"
-            android:id="@+id/ri_ok"
-            android:layout_gravity="right" />
+            android:id="@+id/ri_ok" />
     </LinearLayout>
 
 </LinearLayout>
