@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test1", "test1\test1.vcxproj", "{FF21C638-F143-4656-8F4E-B162475E3F0A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_call_cpp_function", "test_call_cpp_function\test_call_cpp_function.vcxproj", "{4C34C1AE-5EDB-4969-8431-EA55A783252E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF21C638-F143-4656-8F4E-B162475E3F0A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FF21C638-F143-4656-8F4E-B162475E3F0A}.Debug|Win32.Build.0 = Debug|Win32
+		{FF21C638-F143-4656-8F4E-B162475E3F0A}.Release|Win32.ActiveCfg = Release|Win32
+		{FF21C638-F143-4656-8F4E-B162475E3F0A}.Release|Win32.Build.0 = Release|Win32
+		{4C34C1AE-5EDB-4969-8431-EA55A783252E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4C34C1AE-5EDB-4969-8431-EA55A783252E}.Debug|Win32.Build.0 = Debug|Win32
+		{4C34C1AE-5EDB-4969-8431-EA55A783252E}.Release|Win32.ActiveCfg = Release|Win32
+		{4C34C1AE-5EDB-4969-8431-EA55A783252E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

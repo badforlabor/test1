@@ -1,0 +1,11 @@
+/LuaJIT-2.0.4/src/*.exp
+/LuaJIT-2.0.4/src/*.lib
+/LuaJIT-2.0.4/src/*.dll
+/LuaJIT-2.0.4/src/*.exe
+/test_lua/Debug
+/test_lua/test1/Debug
+/test_lua/test_call_cpp_function/Debug
+*.suo
+*.sdf
+*.filters
+*.user
