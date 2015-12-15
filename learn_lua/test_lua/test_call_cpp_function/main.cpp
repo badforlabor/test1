@@ -6,7 +6,7 @@ This is not a free-ware .DO NOT use it without any authorization.
 * author : Labor
 * purpose : 示例：lua调用c函数，c函数调用lua函数
 ****************************************************************************/
-#define _LUA_CALL_CPP_FUNCTION 0
+#define _LUA_CALL_CPP_FUNCTION 1
 
 #include <src/lua.hpp>  
 #include <iostream>  
@@ -18,7 +18,7 @@ extern "C"
 #include <src/lua.h>  
 #include <src/lualib.h>  
 }
-#if _CALL_CPP_FUNCTION
+#if _LUA_CALL_CPP_FUNCTION
 static int average(lua_State *L)
 {
 	//返回栈中元素的个数  
@@ -62,6 +62,26 @@ int main(int argc, char* argv[])
 	}
 
 	lua_pcall(L, 0, 0, 0); /*执行Lua脚本*/
+
+
+	// 测试lua jit关和开的情况下的效率
+	script =
+		"jit.on()\n"	\
+		"local start = os.clock()\n"	\
+		"for i=1,20000000 do\n"	\
+		"	avg, sum = average(10, 20, 30, 40, 50) \n"	\
+		"end\n"	\
+		"print(\"test2 / lua \" .. (os.clock() - start)); \n"	\
+		"";
+
+	error = luaL_loadstring(L, script);
+	if (error)
+	{
+		printf("%s", lua_tostring(L, -1));
+	}
+	lua_pcall(L, 0, 0, 0); /*执行Lua脚本*/
+
+
 	lua_close(L);       /*关闭句柄*/
 	system("pause");
 	return 0;
